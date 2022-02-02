@@ -32,12 +32,10 @@ sass:
 
 # Specify the author for blog posts
 author:
-  name: Mark Otto
-  url: https://twitter.com/mdo
-  email: markdotto@gmail.com
+  name: SON Kiseok
 
 # Custom vars
-version: 3.0.0
+version: 3.0.1
 
 # Navbar page list
 nav:
