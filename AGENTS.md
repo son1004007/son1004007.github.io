@@ -14,10 +14,11 @@
 
 1. `README.md`
 2. `AGENTS.md`
-3. `docs/blog-writing-guide.md`
-4. `docs/post-template.md`
-5. `_config.yml`
-6. 최근 `_posts/` 글
+3. `docs/category-guide.md`
+4. `docs/blog-writing-guide.md`
+5. `docs/post-template.md`
+6. `_config.yml`
+7. 최근 `_posts/` 글
 
 ## Core Writing Principle
 
@@ -39,18 +40,34 @@
 - 데이터 분석 결과를 시스템화하는 업무 경험 보유
 - 보안/감사/내부통제 직무 전환 가능성을 준비 중
 
-## Main Categories
+## Category Policy
 
-권장 카테고리는 다음과 같습니다.
+카테고리는 글의 큰 목적을 나타내고, 태그는 세부 기술과 키워드를 나타냅니다.
 
-- `backend`
-- `database`
-- `infrastructure`
-- `data-systemization`
-- `project-management`
-- `security-audit`
-- `career`
+카테고리는 아래 7개로 고정합니다.
+
+| Category | 사용 기준 |
+|---|---|
+| `backend` | Java, Spring Boot, API, 인증/권한, 웹 애플리케이션 구조 |
+| `database` | SQL, DB 설계, Oracle, PostgreSQL, Tibero, 데이터 모델링 |
+| `infrastructure` | Linux, Nginx, Apache, Tomcat, Podman, 배포, 장애 대응 |
+| `data-systemization` | 분석 결과를 DB, API, 화면, 운영 시스템으로 연결하는 작업 |
+| `security-audit` | 보안, 접근통제, 로그관리, 내부통제, CISA, ISMS-P |
+| `project-management` | PMP, 요구사항 정리, 업무일지, 보고, 고객 커뮤니케이션 |
+| `career` | 이직, 포트폴리오, 기술 블로그 운영, 경력 방향 |
+
+다음 값은 카테고리로 쓰지 않습니다. 필요하면 태그로 사용합니다.
+
 - `study`
+- `linux`
+- `spring`
+- `pmp`
+- `cisa`
+- `troubleshooting`
+- `web`
+- `devops`
+
+자세한 기준은 `docs/category-guide.md`를 따릅니다.
 
 ## Post Frontmatter
 
@@ -61,8 +78,8 @@ Jekyll 포스트는 아래 형식을 사용합니다.
 layout: post
 title: "글 제목"
 date: YYYY-MM-DD
-categories: [category]
-tags: [tag1, tag2]
+categories: [infrastructure]
+tags: [Linux, Troubleshooting]
 ---
 ```
 
@@ -70,6 +87,38 @@ tags: [tag1, tag2]
 
 ```text
 _posts/YYYY-MM-DD-kebab-case-title.md
+```
+
+## Category Selection Examples
+
+```yaml
+# Spring Boot 장애 대응
+categories: [backend]
+tags: [Java, Spring Boot, Troubleshooting]
+```
+
+```yaml
+# Linux / Apache / Podman 운영 장애
+categories: [infrastructure]
+tags: [Linux, Apache, Podman]
+```
+
+```yaml
+# 분석 결과를 화면/API로 연결
+categories: [data-systemization]
+tags: [Data Analysis, API, Requirements]
+```
+
+```yaml
+# PMP 학습 또는 요구사항 정리
+categories: [project-management]
+tags: [PMP, Requirement, Communication]
+```
+
+```yaml
+# CISA / ISMS-P / 내부통제
+categories: [security-audit]
+tags: [CISA, ISMS-P, Internal Control]
 ```
 
 ## Public Safety Rules
@@ -118,13 +167,16 @@ Good: 공공기관 Linux 서버에서 발생한 마운트 실패 대응 절차
 - 단순 개념 요약만 작성하지 않습니다.
 - ChatGPT 대화 원문을 그대로 붙여 넣지 않습니다.
 - 실무 경험을 과장하지 않습니다.
+- 표준 카테고리 외 값을 임의로 추가하지 않습니다.
 
 ## Done Criteria
 
 글 하나를 추가할 때 완료 기준은 다음과 같습니다.
 
 1. Jekyll frontmatter가 있다.
-2. 문제점/원인/해결/실행 방법 구조가 명확하다.
-3. 민감정보가 제거되어 있다.
-4. 이력서/포트폴리오에서 링크해도 부끄럽지 않은 수준이다.
-5. 제목만 봐도 어떤 역량을 보여주는 글인지 알 수 있다.
+2. 표준 카테고리 7개 중 하나를 사용했다.
+3. 태그는 세부 기술과 키워드 중심으로 지정했다.
+4. 문제점/원인/해결/실행 방법 구조가 명확하다.
+5. 민감정보가 제거되어 있다.
+6. 이력서/포트폴리오에서 링크해도 부끄럽지 않은 수준이다.
+7. 제목만 봐도 어떤 역량을 보여주는 글인지 알 수 있다.
