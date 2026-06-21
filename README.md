@@ -29,15 +29,35 @@ GitHub Pages 기반 기술 블로그입니다.
 - 민감정보가 제거되어야 한다.
 - 업무 경험은 특정 고객사 중심이 아니라 일반화된 기술 지식으로 변환해야 한다.
 
+## Category Policy
+
+카테고리는 글의 큰 목적을 나타내고, 태그는 세부 기술과 키워드를 나타냅니다.
+
+카테고리는 아래 7개로 고정합니다.
+
+| Category | 용도 |
+|---|---|
+| `backend` | Java, Spring Boot, API, 인증/권한, 웹 애플리케이션 구조 |
+| `database` | SQL, DB 설계, Oracle, PostgreSQL, Tibero, 데이터 모델링 |
+| `infrastructure` | Linux, Nginx, Apache, Tomcat, Podman, 배포, 장애 대응 |
+| `data-systemization` | 분석 결과를 DB, API, 화면, 운영 시스템으로 연결하는 작업 |
+| `security-audit` | 보안, 접근통제, 로그관리, 내부통제, CISA, ISMS-P |
+| `project-management` | PMP, 요구사항 정리, 업무일지, 보고, 고객 커뮤니케이션 |
+| `career` | 이직, 포트폴리오, 기술 블로그 운영, 경력 방향 |
+
+`study`, `linux`, `spring`, `pmp`, `cisa`, `troubleshooting`은 카테고리로 쓰지 않고 태그로 사용합니다.
+
+자세한 기준은 `docs/category-guide.md`를 따릅니다.
+
 ## Main Topics
 
 - Backend: Java, Spring Boot, JSP, MyBatis, REST API
 - Database: PostgreSQL, Oracle, Tibero, SQL, 데이터 모델링
-- Infrastructure: Linux, Rocky Linux, Ubuntu, Nginx, Apache, Tomcat, SSL
-- Container & Tooling: Docker, Podman, CloudBeaver, VS Code Remote
-- Data Analysis Systemization: 분석 결과를 서비스/운영 환경으로 연결하는 방법
-- Project Management: PMP, 업무일지, 요구사항 정리, 고객 커뮤니케이션
+- Infrastructure: Linux, Rocky Linux, Ubuntu, Nginx, Apache, Tomcat, SSL, Podman
+- Data Systemization: 분석 결과를 서비스/운영 환경으로 연결하는 방법
 - Security & Audit: 정보보안, 내부통제, CISA, ISMS-P, 로그/접근통제
+- Project Management: PMP, 업무일지, 요구사항 정리, 고객 커뮤니케이션
+- Career: 이직, 포트폴리오, 기술 블로그 운영, 경력 방향
 
 ## Writing Workflow
 
@@ -45,6 +65,7 @@ GitHub Pages 기반 기술 블로그입니다.
 ChatGPT 대화
 -> 핵심 내용 추출
 -> 공개 가능 여부 검토
+-> 카테고리/태그 지정
 -> Markdown 글 작성
 -> GitHub repo에 commit/push
 -> GitHub Pages로 공개
@@ -108,10 +129,11 @@ ChatGPT 대화
 다른 ChatGPT 또는 Codex 세션에서 이 저장소를 수정할 때는 아래 파일을 먼저 읽습니다.
 
 1. `AGENTS.md`
-2. `docs/blog-writing-guide.md`
-3. `docs/post-template.md`
-4. `_config.yml`
-5. 최근 `_posts/` 문서
+2. `docs/category-guide.md`
+3. `docs/blog-writing-guide.md`
+4. `docs/post-template.md`
+5. `_config.yml`
+6. 최근 `_posts/` 문서
 
 ## Resume / Portfolio Usage
 
