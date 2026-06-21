@@ -1,128 +1,145 @@
-# Dark Poole
+# SON Kiseok Technical Blog
 
-![Dark Poole](https://user-images.githubusercontent.com/13270895/89133355-26b3af80-d4e9-11ea-81cd-eacaa9c78320.png)
+GitHub Pages 기반 기술 블로그입니다.
 
-Dark Poole is a permanent dark theme of the Poole theme by [@mdo](https://github.com/mdo). I made the theme darker, inspired by [Derek Kedziora's site](https://derekkedziora.com/). Unlike default Poole that utilizes CSS media queries to activate dark mode, the theme will stay dark regardless of the user's preference.
+이 저장소는 단순한 개발 메모장이 아니라, 실무 경험을 이력서와 포트폴리오에서 사용할 수 있는 공개 지식 자산으로 정리하기 위한 공간입니다.
 
-- I added a navbar that is easily customizable. Check out [Development](#development) to see how.
-- I also got rid of the "tagline" in the navbar. I think it looks cleaner without it.
-- Finally, I changed the default font size to 20px. I have 20/20 vision and still thought the original font size was too small.
+## Blog URL
 
-That's it! I tried to be least intrusive as possible to the Poole code base.
+- https://son1004007.github.io
 
-**I noticed that Poole's documentation is slightly outdated and misleading. This documentation will try to address most, if not all, of these issues.**
+## Purpose
 
----
+이 블로그의 목적은 다음과 같습니다.
 
-## Contents
+1. 실무에서 겪은 문제 해결 과정을 재사용 가능한 문서로 정리한다.
+2. ChatGPT를 활용해 대화형 문제 해결 결과를 Markdown 기반 기술 글로 전환한다.
+3. 백엔드 개발, 서버 운영, 데이터 분석 시스템화, 보안/감사 전환 역량을 공개 가능한 형태로 축적한다.
+4. 이력서와 포트폴리오에서 링크할 수 있는 신뢰 가능한 기술 기록을 만든다.
 
-- [Usage](#usage)
-- [Development](#development)
-- [Author](#author)
-- [License](#license)
+## Positioning
 
-## Usage
+이 블로그는 "이직용 홍보 페이지"가 아니라, 개발자로서의 학습·실무·문제 해결 기록입니다.
 
-### 1. Install dependencies
+다만 공개 글은 이력서와 포트폴리오에서 참고할 수 있도록 다음 기준으로 작성합니다.
 
-Poole is built on Jekyll and uses its built-in SCSS compiler to generate our CSS. Before getting started, you'll need to install the Jekyll gem and related dependencies:
+- 문제 상황이 명확해야 한다.
+- 원인 분석 과정이 드러나야 한다.
+- 해결 방법이 재현 가능해야 한다.
+- 민감정보가 제거되어야 한다.
+- 업무 경험은 특정 고객사 중심이 아니라 일반화된 기술 지식으로 변환해야 한다.
 
-```bash
-$ gem install jekyll jekyll-gist jekyll-sitemap jekyll-seo-tag
+## Main Topics
+
+- Backend: Java, Spring Boot, JSP, MyBatis, REST API
+- Database: PostgreSQL, Oracle, Tibero, SQL, 데이터 모델링
+- Infrastructure: Linux, Rocky Linux, Ubuntu, Nginx, Apache, Tomcat, SSL
+- Container & Tooling: Docker, Podman, CloudBeaver, VS Code Remote
+- Data Analysis Systemization: 분석 결과를 서비스/운영 환경으로 연결하는 방법
+- Project Management: PMP, 업무일지, 요구사항 정리, 고객 커뮤니케이션
+- Security & Audit: 정보보안, 내부통제, CISA, ISMS-P, 로그/접근통제
+
+## Writing Workflow
+
+```text
+ChatGPT 대화
+-> 핵심 내용 추출
+-> 공개 가능 여부 검토
+-> Markdown 글 작성
+-> GitHub repo에 commit/push
+-> GitHub Pages로 공개
+-> 이력서/포트폴리오에 주요 글 링크 연결
 ```
 
-### 2. Install bundler
+## Standard Post Structure
 
-You must have bundler installed. If you already have bundler installed, please skip this step.
+기본 글 구조는 다음을 우선 사용합니다.
 
-```bash
-# Update Rubygems
-$ gem update --system
-# Update bundler
-$ gem install bundler
+```markdown
+## 문제점
+
+## 원인
+
+## 해결
+
+## 실행 방법
+
+## 재발 방지 / 개선 방향
+
+## 포트폴리오 관점의 의미
 ```
 
-### 3. Running locally
+개념 설명 글이나 학습 기록은 아래 구조를 사용합니다.
 
-To see your Jekyll site with Poole applied, start a Jekyll server. In Terminal, from `/dark-poole` (or whatever your Jekyll site's root directory is named):
+```markdown
+## 배경
 
-```bash
-$ bundle exec jekyll serve
+## 핵심 개념
+
+## 실무 적용 기준
+
+## 예시
+
+## 정리
 ```
 
-Open <http://localhost:4000> in your browser, and voilà.
+## Public Safety Rules
 
-### 4. Serving it up
+공개 글에는 아래 정보를 포함하지 않습니다.
 
-If you host your code on GitHub, you can use [GitHub Pages](https://pages.github.com) to host your project.
+- 고객사 내부 시스템명, 내부 IP, 계정, 비밀번호, 토큰, 경로
+- 비공개 회의록 원문
+- 계약상 비공개 자료
+- 고객사 실명과 장애 내용을 직접 연결하는 표현
+- 보안상 악용 가능한 상세 설정값
+- 개인 식별정보
 
-1. Fork this repo and switch to the `gh-pages` branch.
-1. If you're [using a custom domain name](https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages), modify the `CNAME` file to point to your new domain.
-1. If you're not using a custom domain name, **modify the `url` in `_config.yml`** to point to your GitHub Pages URL. Example: for a site hosted at `username.github.io`, use `http://username.github.io`.
-1. If you want to use your repo name as a base url, **set the `url`** to your repo link and **set the `baseurl`** to your repo name in **`_config.yml`**. Example: for site hosted on `https://username.github.io/dark-poole`, set `url` as `https://username.github.io/dark-poole` and `baseurl` as `/dark-poole`.
-1. Done! Head to your GitHub Pages URL or custom domain.
+업무 경험은 반드시 일반화해서 작성합니다.
 
-No matter your production or hosting setup, be sure to verify the `baseurl` option file and `CNAME` settings. Not applying this correctly can mean broken styles on your site.
+예시:
 
-### 5. Pagination for sites with base urls
-
-If you are using a base url for your site, (for example, hosted on `https://username.github.io/dark-poole`) you have to make some changes to get jekyll-pagination to work correctly:
-
-In `_config.yml`, add this line:
-
-```yaml
-paginate_path: "/baseurl/page:num/"
+```text
+나쁜 예: 한국지역난방공사 서버 191.xxx.xxx.xxx에서 발생한 장애
+좋은 예: 공공기관 Linux 서버에서 발생한 디스크 마운트 실패 대응 절차
 ```
 
-In `archive.md`, add `{{ site.baseurl }}` before `{{ post.url }}`
+## Files for Future ChatGPT/Codex Sessions
 
-```html
-<!-- Add "{{ site.baseurl }}" -->
-<li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+다른 ChatGPT 또는 Codex 세션에서 이 저장소를 수정할 때는 아래 파일을 먼저 읽습니다.
+
+1. `AGENTS.md`
+2. `docs/blog-writing-guide.md`
+3. `docs/post-template.md`
+4. `_config.yml`
+5. 최근 `_posts/` 문서
+
+## Resume / Portfolio Usage
+
+이력서에는 다음 형태로 연결합니다.
+
+```text
+기술 블로그: https://son1004007.github.io
+- 백엔드 개발, Linux 서버 운영, 데이터 분석 시스템화, 보안/감사 전환 학습 및 실무 기록
+- 실무 장애 대응과 시스템 구축 과정을 문제점/원인/해결/재발방지 구조로 정리
 ```
 
-In `index.html`, remove the `prepend:`:
+포트폴리오에는 주요 글을 프로젝트별 근거 자료로 연결합니다.
 
-```html
-<!-- Remove "prepend:" in "prepend: relative_url" -->
-<a
-  class="pagination-item newer"
-  href="{{ paginator.previous_page_path | relative_url }}"
-  >Newer</a
->
-```
+예시:
 
-## Development
+- Linux 서버 운영 경험: Rocky Linux 마운트 실패 대응 글
+- 웹 서비스 운영 경험: Apache/Nginx/Tomcat 장애 대응 글
+- 데이터 분석 시스템화 경험: 분석 결과를 웹 서비스로 연결하는 글
+- 보안/감사 전환 준비: 접근통제, 로그관리, 내부통제 학습 글
 
-Poole has two branches, but only one is used for active development.
+## Operating Principle
 
-- `master` for development. **All pull requests should be to submitted against `master`.**
-- `gh-pages` for hosted demo **Please avoid using this branch.**
+글을 많이 쓰는 것보다, 실제 이력서와 면접에서 설명 가능한 글을 축적하는 것을 우선합니다.
 
-CSS is handled via Jeykll's built-in Sass compiler. Source Sass files are located in `_sass/`, included into `styles.scss`, and compile to `styles.css`.
+각 글은 다음 질문에 답해야 합니다.
 
-### Customize Navbar
-
-You can easily customize the navbar by tweaking the `_config.yml` file. Simply change the title and url of each of the nav elements, or add more. The order will be preserved in the site.
-
-```yaml
-nav:
-  - title: Blog
-    url: /archive
-
-  - title: About
-    url: /about
-```
-
-## Author
-
-**Mark Otto**
-
-- <https://github.com/mdo>
-- <https://twitter.com/mdo>
-
-## License
-
-Open sourced under the [MIT license](LICENSE.md).
-
-<3
+1. 어떤 문제를 다뤘는가?
+2. 왜 문제가 발생했는가?
+3. 어떻게 해결했는가?
+4. 같은 문제가 다시 발생하면 어떻게 대응할 수 있는가?
+5. 이 경험이 개발자 역량을 어떻게 보여주는가?
