@@ -1,9 +1,11 @@
-# Setup
-title: SON kiseok
-url: https://getpoole.com
-paginate: 1
+# Site setup
+title: SON Kiseok Technical Blog
+description: Backend, Linux, data systemization, security and audit notes for career portfolio.
+url: https://son1004007.github.io
 baseurl: ""
+paginate: 5
 permalink: pretty
+lang: ko-KR
 
 # Gems
 plugins:
@@ -20,17 +22,17 @@ exclude:
   - Gemfile.lock
   - LICENSE.md
   - README.md
+  - AGENTS.md
+  - docs
 
 sass:
   sass_dir: _sass
   style: :compressed
 
 # Options
-
-# Replace this value and uncomment to enable Google Analytics tracking
 # ga_analytics: UA-000000-0
 
-# Specify the author for blog posts
+# Author
 author:
   name: SON Kiseok
 
