@@ -6,6 +6,7 @@ baseurl: ""
 paginate: 5
 permalink: pretty
 lang: ko-KR
+future: true
 
 # Gems
 plugins:
