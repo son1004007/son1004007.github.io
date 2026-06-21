@@ -3,27 +3,42 @@ layout: page
 title: About
 ---
 
-<p class="message">
-  Hey there! This page is included as an example. Feel free to customize it for your own use upon downloading. Carry on!
-</p>
+# About
 
-In the novel, *The Strange Case of Dr. Jekyll and Mr. Hyde*, Mr. Poole is Dr. Jekyll's virtuous and loyal butler. Similarly, Poole is an upstanding and effective butler that helps you build Jekyll themes. It's made by [@mdo](https://twitter.com/mdo).
+백엔드/풀스택 개발자 손기석의 기술 블로그입니다.
 
-There are currently two themes built on Poole:
+이 블로그는 실무에서 겪은 문제 해결 과정, 서버 운영 경험, 데이터 분석 시스템화 경험, 보안/감사 전환 학습 내용을 정리하기 위해 운영합니다.
 
-- [Hyde](https://hyde.getpoole.com)
-- [Lanyon](https://lanyon.getpoole.com)
+## Focus
 
-Learn more and contribute on [GitHub](https://github.com/poole).
+- Java, Spring Boot 기반 백엔드 개발
+- Linux, Nginx, Apache, Tomcat 기반 운영 환경
+- PostgreSQL, Oracle, Tibero 등 관계형 데이터베이스
+- 데이터 분석 결과를 웹 서비스와 운영 시스템으로 연결하는 작업
+- 정보보안, 내부통제, 감사/감리 관점의 기술 정리
 
-## Setup
+## Writing Style
 
-Some fun facts about the setup of this project include:
+글은 가능한 한 다음 구조로 작성합니다.
 
-- Built for [Jekyll](https://jekyllrb.com)
-- Developed on GitHub and hosted for free on [GitHub Pages](https://pages.github.com)
-- Coded with [Atom](https://atom.io), an amazing open source code editor
+```text
+문제점 -> 원인 -> 해결 -> 실행 방법 -> 재발 방지 / 개선 방향
+```
 
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/poole/poole/issues/new) or [ask me on Twitter](https://twitter.com/mdo).
+개념 설명보다 실무에서 재사용 가능한 판단 기준과 절차를 우선합니다.
 
-Thanks for reading!
+## Public Scope
+
+업무 경험을 정리하되, 고객사명, 내부 IP, 계정, 비공개 경로, 회의록 원문, 민감정보는 공개하지 않습니다.
+
+특정 프로젝트 경험은 일반화하여 다른 환경에서도 참고할 수 있는 기술 문서로 변환합니다.
+
+## Resume / Portfolio
+
+이 블로그는 이력서와 포트폴리오에서 다음 내용을 보완하는 용도로 사용합니다.
+
+- 장애 대응 경험
+- 운영 환경 구성 경험
+- 백엔드 개발 경험
+- 분석 결과 시스템화 경험
+- 보안/감사 전환을 위한 학습과 실무 정리
