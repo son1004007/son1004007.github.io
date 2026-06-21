@@ -48,6 +48,7 @@
 | done | Apache VirtualHost 404 장애 원인 분석 | `infrastructure` | 웹서버 장애 대응 |
 | done | Podman 기반 CloudBeaver 운영 검토 | `infrastructure` | 분석 서버 도구 운영 |
 | done | 분석 결과를 웹 서비스로 시스템화할 때 고려할 점 | `data-systemization` | 분석 결과 시스템화 기준 |
+| done | Nginx + Tomcat + Let’s Encrypt 기반 웹 서비스 운영 구조 | `infrastructure` | 웹 서비스 운영/배포 구조 |
 
 ---
 
@@ -55,16 +56,15 @@
 
 | 우선순위 | 제목 | Category | 포트폴리오 의미 |
 |---:|---|---|---|
-| 1 | Nginx + Tomcat + Let’s Encrypt 기반 웹 서비스 운영 구조 | `infrastructure` | 웹 서비스 운영/배포 역량 |
-| 2 | Spring Boot + JSP 운영 환경에서 로그인 루프를 점검하는 방법 | `backend` | 백엔드 운영 장애 대응 |
-| 3 | 분석가가 만든 결과물을 웹 화면과 API로 연결하는 절차 | `data-systemization` | 분석-개발 연결 역량 |
-| 4 | 공공 데이터 분석 프로젝트에서 분석 범위와 개발 범위를 구분하는 방법 | `project-management` | 요구사항/범위 조율 역량 |
-| 5 | GitHub Pages 기술 블로그를 이력서 포트폴리오로 운영하는 방법 | `career` | 포트폴리오 운영 전략 |
-| 6 | VS Code Remote SSH를 개발 서버 환경으로 사용할 때의 장단점 | `infrastructure` | 개발환경 설계 역량 |
-| 7 | CloudBeaver, VS Code Server, Jupyter 중 분석 서버 도구 선택 기준 | `data-systemization` | 분석환경 아키텍처 판단 |
-| 8 | Apache와 Nginx가 섞인 서버에서 포트와 프록시 역할을 정리하는 방법 | `infrastructure` | 운영환경 정리 역량 |
-| 9 | 데이터 분석 프로젝트에서 원천 로그를 요청할 때 필요한 항목 | `data-systemization` | 데이터 요구사항 정의 역량 |
-| 10 | 분석 결과를 운영 DB 테이블로 설계할 때 고려할 점 | `database` | 데이터 모델링/서비스화 역량 |
+| 1 | Spring Boot + JSP 운영 환경에서 로그인 루프를 점검하는 방법 | `backend` | 백엔드 운영 장애 대응 |
+| 2 | 분석가가 만든 결과물을 웹 화면과 API로 연결하는 절차 | `data-systemization` | 분석-개발 연결 역량 |
+| 3 | 공공 데이터 분석 프로젝트에서 분석 범위와 개발 범위를 구분하는 방법 | `project-management` | 요구사항/범위 조율 역량 |
+| 4 | GitHub Pages 기술 블로그를 이력서 포트폴리오로 운영하는 방법 | `career` | 포트폴리오 운영 전략 |
+| 5 | VS Code Remote SSH를 개발 서버 환경으로 사용할 때의 장단점 | `infrastructure` | 개발환경 설계 역량 |
+| 6 | CloudBeaver, VS Code Server, Jupyter 중 분석 서버 도구 선택 기준 | `data-systemization` | 분석환경 아키텍처 판단 |
+| 7 | Apache와 Nginx가 섞인 서버에서 포트와 프록시 역할을 정리하는 방법 | `infrastructure` | 운영환경 정리 역량 |
+| 8 | 데이터 분석 프로젝트에서 원천 로그를 요청할 때 필요한 항목 | `data-systemization` | 데이터 요구사항 정의 역량 |
+| 9 | 분석 결과를 운영 DB 테이블로 설계할 때 고려할 점 | `database` | 데이터 모델링/서비스화 역량 |
 
 ---
 
@@ -100,7 +100,7 @@
 
 | 상태 | 제목 | 설명 |
 |---|---|---|
-| todo-1 | Nginx + Tomcat + Let’s Encrypt 기반 웹 서비스 운영 구조 | Apache 혼선 정리 후 Nginx 중심 운영 |
+| done | Nginx + Tomcat + Let’s Encrypt 기반 웹 서비스 운영 구조 | Apache 혼선 정리 후 Nginx 중심 운영 |
 | todo-1 | Apache와 Nginx가 섞인 서버에서 포트와 프록시 역할을 정리하는 방법 | 80/443, 8080, AJP, 리버스 프록시 |
 | todo-1 | VS Code Remote SSH를 개발 서버 환경으로 사용할 때의 장단점 | 노트북은 문서/학습, 서버는 개발환경 |
 | todo-2 | Rocky Linux에서 nginx 업그레이드 후 확인할 항목 | nginx.org repo, 모듈, 설정 경로 |
@@ -190,8 +190,8 @@
 
 ## 다음 작성 추천 5개
 
-1. Nginx + Tomcat + Let’s Encrypt 기반 웹 서비스 운영 구조
-2. Spring Boot + JSP 운영 환경에서 로그인 루프를 점검하는 방법
-3. 분석가가 만든 결과물을 웹 화면과 API로 연결하는 절차
-4. 공공 데이터 분석 프로젝트에서 분석 범위와 개발 범위를 구분하는 방법
-5. GitHub Pages 기술 블로그를 이력서 포트폴리오로 운영하는 방법
+1. Spring Boot + JSP 운영 환경에서 로그인 루프를 점검하는 방법
+2. 분석가가 만든 결과물을 웹 화면과 API로 연결하는 절차
+3. 공공 데이터 분석 프로젝트에서 분석 범위와 개발 범위를 구분하는 방법
+4. GitHub Pages 기술 블로그를 이력서 포트폴리오로 운영하는 방법
+5. VS Code Remote SSH를 개발 서버 환경으로 사용할 때의 장단점
