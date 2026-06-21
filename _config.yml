@@ -45,6 +45,9 @@ nav:
   - title: Blog
     url: /archive
 
+  - title: Topics
+    url: /categories
+
   - title: Study
     url: /study
 
