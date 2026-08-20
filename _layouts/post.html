@@ -6,6 +6,9 @@ layout: default
   <h1 class="post-title">{{ page.title }}</h1>
   <time datetime="{{ page.date | date_to_xmlschema }}" class="post-date">{{ page.date | date_to_string }}</time>
   {{ content }}
+  {% if page.url contains 'github-control-plane-ai-semi-automation' %}
+    {% include github-control-plane-internal-network-note.html %}
+  {% endif %}
 </article>
 
 <p>
