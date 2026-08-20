@@ -1,0 +1,76 @@
+<section class="post-note">
+  <hr>
+  <h2>추가: 내부망 GitLab/Gitea의 현실적 제약</h2>
+  <p>GitLab이나 Gitea가 기능적으로 같은 Control Plane 역할을 수행할 수 있다는 것과 <strong>ChatGPT가 현재 채팅에서 그 저장소를 직접 읽고 수정할 수 있다는 것은 다른 문제</strong>다.</p>
+
+  <pre><code>                    Internet / SaaS 영역
+
+                 ChatGPT / Business
+                         │
+                         │ 기본적으로 직접 접근 불가
+                         │
+              ───────────┼─────────── 보안 경계
+                         │
+                         ▼
+                 고객사 내부망 / VPN
+
+              GitLab / Gitea / Jenkins
+                         │
+                         ▼
+                Source + CI/CD + Log
+                         │
+                         ▼
+                 Preview / Production</code></pre>
+
+  <p>저장소가 사설 IP, 내부 DNS, 고객사 VPN 안에서만 접근 가능하면 외부 SaaS에서 실행되는 ChatGPT는 그 주소를 일반 웹사이트처럼 바로 열 수 없다. <strong>ChatGPT Business 또는 Enterprise를 사용한다고 해서 고객사 내부망에 자동으로 네트워크 경로가 생기는 것도 아니다.</strong></p>
+
+  <p>따라서 다음 흐름은 Git 플랫폼 기능만 갖춰졌다고 자동으로 성립하지 않는다.</p>
+
+  <pre><code>ChatGPT
+-&gt; 내부 GitLab/Gitea repository 읽기
+-&gt; 코드 수정
+-&gt; pipeline 실행
+-&gt; 내부 job log 읽기
+-&gt; 다시 코드 수정</code></pre>
+
+  <p>이 흐름을 만들려면 ChatGPT와 내부망 사이에 별도의 Adapter 또는 Bridge가 필요하다.</p>
+
+  <pre><code>방법 1
+ChatGPT
+-&gt; 승인된 Custom MCP App / Secure MCP Tunnel
+-&gt; 내부 GitLab/Gitea API
+
+방법 2
+ChatGPT
+-&gt; 외부에서 접근 가능한 통제된 API Gateway
+-&gt; 내부 Git platform
+
+방법 3
+ChatGPT는 요구사항과 검토만 수행
+-&gt; 고객사 내부 Codex / Agent Runner
+-&gt; 내부 GitLab/Gitea
+-&gt; CI/CD
+
+방법 4
+Git platform과 Runner를 모두 고객망 내부에 유지
+-&gt; 내부 Agent가 구현/배포/검증
+-&gt; 외부 ChatGPT에는 비식별 상태와 결과만 전달</code></pre>
+
+  <p>OpenAI의 Custom MCP 방식도 온프레미스나 비공개 네트워크의 MCP 서버에 ChatGPT가 직접 붙는 구조가 아니라, 별도의 보안 터널 또는 원격 접근 계층을 두는 방식으로 이해하는 것이 맞다.</p>
+
+  <p>따라서 <strong>모바일 ChatGPT에서 관리 포인트를 최소화하는 것이 최우선이면 GitHub SaaS가 현재 구현 마찰이 가장 적을 수 있다.</strong> 반대로 고객사 정책상 소스와 CI/CD를 내부망에 유지해야 한다면 GitLab/Gitea가 더 적합할 수 있지만, 이 경우 AI orchestration도 고객사 내부 Agent 쪽으로 이동시키는 편이 현실적이다.</p>
+
+  <pre><code>ChatGPT 중심 운영 편의 우선
+-&gt; 외부에서 승인된 Git provider/API 경로 필요
+-&gt; GitHub SaaS가 상대적으로 단순
+
+내부망 격리와 데이터 통제 우선
+-&gt; GitLab/Gitea Self-Managed 가능
+-&gt; Codex/Agent Runner도 내부망 배치 권장
+
+내부 GitLab/Gitea + 외부 ChatGPT 직접 제어
+-&gt; 별도 MCP/Tunnel/API Bridge 필요
+-&gt; 구축·보안검토·운영 비용 증가</code></pre>
+
+  <p>고객사 적용 가능성을 판단할 때는 Git 제품명보다 먼저 <strong>“외부 AI가 해당 Control Plane과 실행 증거에 실제로 도달할 수 있는가?”</strong>를 확인해야 한다.</p>
+</section>
