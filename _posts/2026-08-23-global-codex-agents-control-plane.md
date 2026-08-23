@@ -255,7 +255,7 @@ Codex
 5. 실행 환경의 global AGENTS는 managed block으로 갱신한다.
 6. 전역 지침 적용 여부도 실제 Agent E2E로 검증한다.
 7. Global Control 접근 실패가 보안 정책 완화의 이유가 되어서는 안 된다.
-8. 모르는 기술 동작은 [Official-Source-First](/infrastructure/2026/08/23/official-source-first-ai-troubleshooting.html) 원칙을 따른다.
+8. 모르는 기술 동작은 [Official-Source-First]({% post_url 2026-08-23-official-source-first-ai-troubleshooting %}) 원칙을 따른다.
 
 ## 결과
 
