@@ -3,7 +3,7 @@ layout: post
 title: "ChatGPT Custom Instructions로 GitHub 작업 기준을 자동으로 불러오게 만드는 방법"
 date: 2026-08-24
 categories: [infrastructure]
-tags: [ChatGPT, Custom Instructions, GitHub, AI Agent, Control Plane, AGENTS.md]
+tags: [ChatGPT, Custom Instructions, GitHub, GitHub Copilot, AI Agent, Control Plane, AGENTS.md]
 ---
 
 여러 ChatGPT 채팅에서 같은 GitHub 프로젝트를 반복해서 다루다 보면 매번 같은 설명을 다시 해야 하는 문제가 생긴다.
@@ -75,13 +75,146 @@ Office / NAS Codex
 
 프로젝트 상태까지 Custom Instructions에 넣으면 시간이 지나면서 GitHub와 내용이 달라지고 다시 관리 포인트가 생긴다.
 
+## GitHub 공식 문서에서도 확인되는 유사한 구조
+
+이 구조를 만든 뒤 GitHub 공식 문서를 확인해 보니, GitHub Copilot도 instruction을 한 파일에 모두 넣기보다 **사용자 수준, repository 수준, path 수준, agent 수준으로 나누는 구조**를 공식 지원하고 있었다.
+
+GitHub 공식 문서:
+
+- [Adding repository custom instructions for GitHub Copilot](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/add-custom-instructions/add-repository-instructions)
+- [Adding repository custom instructions for GitHub Copilot in your IDE](https://docs.github.com/en/copilot/how-tos/configure-custom-instructions-in-your-ide/add-repository-instructions-in-your-ide)
+- [Adding custom instructions for GitHub Copilot CLI](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/add-custom-instructions)
+- [Support for different types of custom instructions](https://docs.github.com/en/copilot/reference/custom-instructions-support)
+- [Customize Copilot for your project](https://docs.github.com/en/copilot/how-tos/copilot-on-github/customize-copilot/customize-copilot-overview)
+
+### Repository-wide instructions
+
+GitHub은 `.github/copilot-instructions.md`를 repository 전체에 적용되는 지속적인 지침으로 정의한다.
+
+이 파일에는 프로젝트 구조, 코딩 규칙, build/test 방법처럼 해당 repository를 이해하고 수정할 때 반복적으로 필요한 정보를 둘 수 있다.
+
+개념적으로 내가 사용하는 root `AGENTS.md`와 비슷한 역할이다.
+
+```text
+repository
+  -> .github/copilot-instructions.md
+  -> AGENTS.md
+  -> code / tests / local state docs
+```
+
+다만 둘은 같은 파일 형식이 아니다. 사용하는 AI와 실행 환경이 지원하는 instruction 종류를 확인해야 한다.
+
+### Path-specific instructions
+
+GitHub은 `.github/instructions/**/*.instructions.md` 파일과 `applyTo` glob을 이용해 특정 경로에만 지침을 적용할 수 있도록 한다.
+
+예를 들어 Java와 frontend 코드의 규칙이 다르다면 전역 문서를 거대하게 만드는 대신 다음처럼 범위를 분리할 수 있다.
+
+```text
+.github/instructions/
+  backend.instructions.md
+  frontend.instructions.md
+```
+
+이는 중앙 Control에 모든 프로젝트 세부 규칙을 넣지 않고 **가장 가까운 실제 작업 범위에 세부 정책을 둔다**는 현재 설계와 같은 방향이다.
+
+### Agent instructions와 AGENTS.md
+
+GitHub 공식 문서는 Copilot agent가 `AGENTS.md`를 agent instruction으로 사용할 수 있다고 설명한다.
+
+하위 디렉터리에 여러 `AGENTS.md`가 있다면 작업 위치와 가까운 파일이 더 구체적인 지침 역할을 한다. 즉 다음처럼 계층을 만들 수 있다.
+
+```text
+root AGENTS.md
+  -> 전체 repository 규칙
+
+backend/AGENTS.md
+  -> backend에 더 구체적인 규칙
+
+backend/payment/AGENTS.md
+  -> payment 작업에 가장 구체적인 규칙
+```
+
+이 점은 현재 사용 중인 **전역 Control은 공통 원칙만 소유하고, 실제 프로젝트 repository의 local `AGENTS.md`가 더 구체적인 제한을 소유하는 방식**과 잘 맞는다.
+
+### Copilot CLI에는 사용자 수준 전역 instructions도 있다
+
+GitHub Copilot CLI 공식 문서는 다음 위치를 사용자 수준 instruction으로 정의한다.
+
+```text
+$HOME/.copilot/copilot-instructions.md
+$HOME/.copilot/instructions/**/*.instructions.md
+```
+
+이 지침은 여러 repository에 걸쳐 적용된다.
+
+역할만 비교하면 현재 구조의 다음 두 요소와 유사하다.
+
+```text
+ChatGPT
+ -> Custom Instructions
+
+Codex
+ -> $CODEX_HOME/AGENTS.md
+```
+
+즉 **사용자 수준에는 얇은 공통 bootstrap을 두고, repository 수준에는 구체적인 프로젝트 지침을 두는 패턴** 자체가 GitHub Copilot의 공식 customization 모델에서도 확인된다.
+
+### 다른 파일을 참조하는 기능도 공식 지원한다
+
+Copilot CLI 문서에서는 `.github/copilot-instructions.md`, `AGENTS.md`, `CLAUDE.md` 등에서 `@`와 상대 경로를 사용해 다른 파일을 포함할 수 있다고 설명한다.
+
+예를 들면 개념적으로 다음과 같은 형태다.
+
+```text
+@docs/build-and-test.md
+@docs/security-policy.md
+```
+
+이 기능은 한 문서에 세부 내용을 복사하지 않고 원본 문서를 참조하는 데 유용하다.
+
+내 중앙 Control 설계도 같은 원칙을 사용하지만 구현 방식은 다르다.
+
+```text
+Custom Instructions
+ -> CONTROL.md를 확인하라고 지시
+ -> registry를 읽음
+ -> 실제 Source of Truth로 이동
+```
+
+일반 ChatGPT에서는 GitHub Copilot CLI의 `@relative/path` 포함 동작을 그대로 가정하지 않는다. **GitHub 접근이 가능한 ChatGPT에게 자연어 instruction으로 해당 파일을 실제 확인하도록 요구하는 bootstrap**이다.
+
+### 모든 제품 표면이 같은 instruction을 지원하는 것은 아니다
+
+GitHub은 별도 support matrix를 제공한다. GitHub.com Copilot Chat, Copilot cloud agent, code review, VS Code, JetBrains, Copilot CLI 등에서 지원하는 instruction 종류가 서로 다르다.
+
+이 차이가 중요하다.
+
+```text
+AGENTS.md가 GitHub의 한 기능에서 지원됨
+ !=
+모든 AI/모든 실행환경에서 자동 적용됨
+```
+
+따라서 현재 구조에서는 특정 제품의 자동 탐색 기능 하나에만 의존하지 않고 다음을 함께 사용한다.
+
+```text
+ChatGPT Custom Instructions
+ + repository-local AGENTS.md
+ + central CONTROL.md
+ + Codex runtime global AGENTS.md
+ + local security fallback
+```
+
+이 방식은 중복처럼 보일 수 있지만 실제로는 **서로 다른 AI 실행 표면 사이의 bootstrap gap을 메우는 최소 포인터**다.
+
 ## 해결
 
 ChatGPT의 Custom Instructions에는 중앙 GitHub Control을 찾기 위한 bootstrap만 넣었다.
 
 현재 OpenAI 도움말 기준으로 Custom Instructions는 Web, Desktop, iOS, Android에서 사용할 수 있고, 활성화하면 채팅 전반에 적용된다.
 
-공식 문서:
+OpenAI 공식 문서:
 
 - [ChatGPT Custom Instructions](https://help.openai.com/en/articles/8096356-chatgpt-custom-instructions)
 - [Projects in ChatGPT](https://help.openai.com/en/articles/10169521-projects-in-chatgpt)
@@ -226,6 +359,24 @@ Custom Instructions에는 **중앙 Control을 찾는 규칙만 유지**한다.
 
 새 repository를 만들거나 기존 repository를 다시 활성화할 때는 중앙 registry와 해당 repository의 `AGENTS.md`를 갱신한다. Custom Instructions는 보통 다시 수정할 필요가 없다.
 
+GitHub Copilot까지 같은 운영 철학을 적용한다면 공식 지원 위치를 그대로 활용할 수 있다.
+
+```text
+Copilot user-level
+ -> $HOME/.copilot/copilot-instructions.md
+
+Repository-wide
+ -> .github/copilot-instructions.md
+
+Path-specific
+ -> .github/instructions/**/*.instructions.md
+
+Agent-specific
+ -> AGENTS.md
+```
+
+다만 모든 파일에 동일한 내용을 복사하는 것은 피하고, 각 계층에는 자기 범위에 필요한 최소 지침과 원본 문서 포인터만 두는 편이 낫다.
+
 기술 동작을 잘 모를 때의 공통 판단 방식은 {% post_url 2026-08-23-official-source-first-ai-troubleshooting %}에서 정리한 Official-Source-First 원칙을 그대로 사용한다.
 
 ## 주의점
@@ -241,6 +392,8 @@ Custom Instructions에 다음 정보를 넣지 않는 편이 좋다.
 Custom Instructions는 계정 전반의 많은 대화에 영향을 줄 수 있는 위치이므로 **세부 상태 저장소가 아니라 bootstrap contract**로 취급하는 것이 적절하다.
 
 또한 Custom Instructions가 있다고 해서 GitHub 접근 권한 자체가 생기는 것은 아니다. private repository를 확인해야 하는 작업에서는 해당 ChatGPT 환경이 GitHub에 접근할 수 있어야 한다.
+
+GitHub Copilot의 공식 instruction 파일이 존재한다는 사실도 일반 ChatGPT가 그 파일을 자동으로 읽는다는 의미는 아니다. 제품과 실행 표면별 공식 지원 범위를 분리해서 판단해야 한다.
 
 ## 포트폴리오 관점의 의미
 
@@ -277,4 +430,6 @@ GitHub Global Control
       global AGENTS             global AGENTS
 ```
 
-이제 일반 ChatGPT 새 채팅, GitHub repository에서 시작한 Agent, Ubuntu 개발 서버의 Codex, NAS에서 격리 실행되는 Codex가 모두 **같은 중앙 운영 기준을 발견하되 실제 프로젝트 상태는 각자의 Source of Truth에서 읽는 구조**가 된다.
+GitHub Copilot을 추가한다면 공식적으로 지원하는 user/repository/path/agent instruction 계층을 같은 Source-of-Truth 원칙에 맞춰 연결할 수 있다.
+
+결과적으로 일반 ChatGPT 새 채팅, GitHub repository에서 시작한 Agent, Ubuntu 개발 서버의 Codex, NAS에서 격리 실행되는 Codex가 모두 **같은 중앙 운영 기준을 발견하되 실제 프로젝트 상태는 각자의 Source of Truth에서 읽는 구조**가 된다.
