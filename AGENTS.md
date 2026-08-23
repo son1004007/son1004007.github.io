@@ -1,5 +1,11 @@
 # AGENTS.md
 
+## Global AI Control
+
+When GitHub access is available, before substantive work read `son1004007/ai-agent-workflow-playbook/CONTROL.md`, then return here and follow this repository's public-blog rules. The global control provides cross-repository discovery and shared verification rules. **This repository remains the source of truth for public blog structure, publication policy, and sanitized public content.**
+
+For CISA work, the private `son1004007/cisa-playbook` repository remains the source of truth for application code and learner data. Publish only sanitized aggregate analysis to `cisa-study.md`; never copy proprietary question text, answers, rationales, credentials, private infrastructure details, or personal data into this public repository.
+
 이 파일은 ChatGPT, Codex, Claude Code 등 AI 도구가 이 저장소를 수정할 때 먼저 읽어야 하는 작업 기준입니다.
 
 ## Repository Purpose
@@ -132,6 +138,7 @@ tags: [CISA, ISMS-P, Internal Control]
 - 내부 시스템의 정확한 경로와 접속 정보
 - 고객사 실명과 장애 내용을 직접 연결하는 표현
 - 개인정보
+- 상용 자격증 문제집의 문제, 정답, 해설 원문
 
 업무 경험은 일반화합니다.
 
