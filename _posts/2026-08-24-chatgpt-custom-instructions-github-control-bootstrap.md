@@ -21,7 +21,7 @@ tags: [ChatGPT, Custom Instructions, GitHub, GitHub Copilot, AI Agent, Control P
 
 그래서 ChatGPT에는 **Custom Instructions를 아주 얇은 bootstrap layer로 사용**했다.
 
-이 글은 {% post_url 2026-08-23-global-codex-agents-control-plane %}에서 구성한 GitHub/서버 Control 구조를 일반 ChatGPT 새 채팅까지 확장한 기록이다.
+이 글은 [여러 프로젝트와 서버에서 Codex 운영 기준을 자동으로 이어받게 만든 방법]({% post_url 2026-08-23-global-codex-agents-control-plane %})에서 구성한 GitHub/서버 Control 구조를 일반 ChatGPT 새 채팅까지 확장한 기록이다.
 
 ## 문제점
 
@@ -122,7 +122,7 @@ GitHub은 `.github/instructions/**/*.instructions.md` 파일과 `applyTo` glob�
 
 GitHub 공식 문서는 Copilot agent가 `AGENTS.md`를 agent instruction으로 사용할 수 있다고 설명한다.
 
-하위 디렉터리에 여러 `AGENTS.md`가 있다면 작업 위치와 가까운 파일이 더 구체적인 지침 역할을 한다. 즉 다음처럼 계층을 만들 수 있다.
+하위 디렉터리에 여러 `AGENTS.md`가 있다면 작업 위치와 가까운 파일이 더 구체적인 지침 역할을 한다.
 
 ```text
 root AGENTS.md
@@ -164,8 +164,6 @@ Codex
 
 Copilot CLI 문서에서는 `.github/copilot-instructions.md`, `AGENTS.md`, `CLAUDE.md` 등에서 `@`와 상대 경로를 사용해 다른 파일을 포함할 수 있다고 설명한다.
 
-예를 들면 개념적으로 다음과 같은 형태다.
-
 ```text
 @docs/build-and-test.md
 @docs/security-policy.md
@@ -187,8 +185,6 @@ Custom Instructions
 ### 모든 제품 표면이 같은 instruction을 지원하는 것은 아니다
 
 GitHub은 별도 support matrix를 제공한다. GitHub.com Copilot Chat, Copilot cloud agent, code review, VS Code, JetBrains, Copilot CLI 등에서 지원하는 instruction 종류가 서로 다르다.
-
-이 차이가 중요하다.
 
 ```text
 AGENTS.md가 GitHub의 한 기능에서 지원됨
@@ -282,8 +278,6 @@ ChatGPT Project를 사용하는 경우 프로젝트별 지침도 따로 설정�
 
 OpenAI 공식 도움말 기준으로 Project Instructions는 **그 프로젝트 안에서만 적용되고 전역 Custom Instructions보다 우선한다.**
 
-따라서 구조는 다음처럼 이해하면 된다.
-
 ```text
 일반 채팅
  -> global Custom Instructions
@@ -304,8 +298,6 @@ son1004007/ai-agent-workflow-playbook/CONTROL.md를 먼저 확인하고,
 ## 검증 방법
 
 설정을 넣은 뒤에는 새 ChatGPT 채팅에서 실제로 복원 흐름이 동작하는지 확인한다.
-
-예를 들어:
 
 ```text
 내 포트폴리오 현재 진행 상태 확인해줘.
@@ -377,7 +369,7 @@ Agent-specific
 
 다만 모든 파일에 동일한 내용을 복사하는 것은 피하고, 각 계층에는 자기 범위에 필요한 최소 지침과 원본 문서 포인터만 두는 편이 낫다.
 
-기술 동작을 잘 모를 때의 공통 판단 방식은 {% post_url 2026-08-23-official-source-first-ai-troubleshooting %}에서 정리한 Official-Source-First 원칙을 그대로 사용한다.
+기술 동작을 잘 모를 때의 공통 판단 방식은 [Official-Source-First 원칙]({% post_url 2026-08-23-official-source-first-ai-troubleshooting %})을 그대로 사용한다.
 
 ## 주의점
 
