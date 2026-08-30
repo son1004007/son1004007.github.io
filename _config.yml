@@ -1,2 +1,63 @@
 # Site setup
 title: SON Kiseok Technical Blog
+description: Java/Spring 백엔드 개발, Linux 운영, 데이터 시스템화, AI 개발 워크플로, 보안·감사 경험을 문제 해결 중심으로 정리하는 기술 블로그입니다.
+url: https://son1004007.github.io
+baseurl: ""
+paginate: 5
+permalink: pretty
+lang: ko-KR
+future: true
+
+# Google Search Console
+google_site_verification: u8hiK-I85rDdzv5nny-fDPiuq2pAyKzC9eL4ak28qOM
+
+# Google Analytics 4
+# Optional. Paste a GA4 measurement/tag ID such as G-XXXXXXXXXX to enable it.
+google_analytics:
+
+# Gems
+plugins:
+  - jekyll-gist
+  - jekyll-paginate
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Optimize Jekyll
+exclude:
+  - .editorconfig
+  - .git
+  - .jekyll-cache
+  - Gemfile
+  - Gemfile.lock
+  - LICENSE.md
+  - README.md
+  - AGENTS.md
+  - docs
+
+sass:
+  sass_dir: _sass
+  style: :compressed
+
+# Author
+author:
+  name: SON Kiseok
+
+# Custom vars
+version: 3.0.1
+
+# Navbar page list
+nav:
+  - title: Blog
+    url: /archive
+
+  - title: Topics
+    url: /categories
+
+  - title: Notes
+    url: /notes
+
+  - title: Study
+    url: /study
+
+  - title: About
+    url: /about
