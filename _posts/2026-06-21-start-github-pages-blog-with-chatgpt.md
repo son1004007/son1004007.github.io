@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "ChatGPT를 활용해 GitHub Pages 기술 블로그를 시작합니다"
+description: "ChatGPT로 실무 문제 해결 과정을 정리하고 Markdown과 GitHub Pages를 이용해 재사용 가능한 기술 기록과 포트폴리오로 만드는 방법을 소개합니다."
 date: 2026-06-21
 categories: [career]
 tags: [ChatGPT, GitHub Pages, Portfolio, Backend, DevOps]
