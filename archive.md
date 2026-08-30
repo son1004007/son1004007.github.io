@@ -1,34 +1,37 @@
 ---
 layout: default
 title: Blog
+description: 백엔드 개발, Linux 운영, 데이터 시스템화, 보안·감사, AI 개발 워크플로 관련 기술·업무 글 목록입니다.
 ---
 
 # Blog
 
-실무 문제 해결, 서버 운영, 백엔드 개발, 데이터 분석 시스템화, 보안/감사 전환 과정을 정리한 글입니다.
+실무 문제 해결, 서버 운영, 백엔드 개발, 데이터 분석 시스템화, 보안/감사 전환 과정을 정리한 기술·업무 글입니다.
 
-처음 방문했다면 아래 글부터 확인하면 됩니다.
+개인적인 생활·의사결정 기록은 <a href="{{ '/notes/' | relative_url }}">Notes</a>에서 별도로 확인할 수 있습니다.
 
-## 먼저 볼 글
-
-<ul>
-  <li><a href="{{ '/career/2026/06/21/start-github-pages-blog-with-chatgpt/' | relative_url }}">ChatGPT를 활용해 GitHub Pages 기술 블로그를 시작합니다</a></li>
-  <li><a href="{{ '/infrastructure/2026/06/22/rocky-linux-disk-mount-failure/' | relative_url }}">Rocky Linux 디스크 마운트 실패 대응 절차</a></li>
-  <li><a href="{{ '/infrastructure/2026/06/22/apache-virtualhost-404-troubleshooting/' | relative_url }}">Apache VirtualHost 404 장애 원인 분석</a></li>
-  <li><a href="{{ '/infrastructure/2026/06/22/cloudbeaver-with-podman/' | relative_url }}">Podman 기반 CloudBeaver 운영 검토</a></li>
-  <li><a href="{{ '/data-systemization/2026/06/22/data-analysis-systemization/' | relative_url }}">분석 결과를 웹 서비스로 시스템화할 때 고려할 점</a></li>
-</ul>
-
-## 전체 글
+## 전체 기술·업무 글
 
 {% assign postsByYearMonth = site.posts | group_by_exp: "post", "post.date | date: '%Y-%m'" %}
 {% for yearMonth in postsByYearMonth %}
-  {% assign year = yearMonth.name | slice: 0, 4 %}
-  {% if year == "2026" %}
+  {% assign visible_count = 0 %}
+  {% for post in yearMonth.items %}
+    {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      {% if post.categories contains 'backend' or post.categories contains 'database' or post.categories contains 'infrastructure' or post.categories contains 'data-systemization' or post.categories contains 'security-audit' or post.categories contains 'project-management' or post.categories contains 'career' %}
+        {% assign visible_count = visible_count | plus: 1 %}
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+
+  {% if visible_count > 0 %}
   <h2>{{ yearMonth.name }}</h2>
   <ul>
     {% for post in yearMonth.items %}
-      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+        {% if post.categories contains 'backend' or post.categories contains 'database' or post.categories contains 'infrastructure' or post.categories contains 'data-systemization' or post.categories contains 'security-audit' or post.categories contains 'project-management' or post.categories contains 'career' %}
+        <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a></li>
+        {% endif %}
+      {% endunless %}
     {% endfor %}
   </ul>
   {% endif %}
