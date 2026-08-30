@@ -8,11 +8,16 @@ permalink: pretty
 lang: ko-KR
 future: true
 
+# Google Search Console
+# After adding the site in Search Console, paste only the verification token here.
+google_site_verification:
+
 # Gems
 plugins:
   - jekyll-gist
   - jekyll-paginate
   - jekyll-seo-tag
+  - jekyll-sitemap
 
 # Optimize Jekyll
 exclude:
