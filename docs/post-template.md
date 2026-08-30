@@ -16,12 +16,15 @@ career
 
 `study`, `linux`, `spring`, `pmp`, `cisa`, `troubleshooting`은 카테고리로 쓰지 않고 태그로 사용합니다.
 
+모든 새 글에는 가능하면 검색 결과와 공유 미리보기에 사용할 `description`을 1~2문장으로 작성합니다. 제목을 그대로 반복하거나 키워드만 나열하지 않습니다.
+
 ## Troubleshooting / Operations Template
 
 ```markdown
 ---
 layout: post
 title: "문제 또는 장애 제목"
+description: "어떤 환경에서 어떤 문제를 어떻게 진단하고 해결했는지 한두 문장으로 설명합니다."
 date: YYYY-MM-DD
 categories: [infrastructure]
 tags: [Linux, Troubleshooting]
@@ -76,6 +79,7 @@ systemctl status nginx
 ---
 layout: post
 title: "백엔드 개발 또는 장애 제목"
+description: "백엔드 문제의 조건, 원인과 해결 방향을 한두 문장으로 설명합니다."
 date: YYYY-MM-DD
 categories: [backend]
 tags: [Java, Spring Boot, Troubleshooting]
@@ -102,6 +106,7 @@ tags: [Java, Spring Boot, Troubleshooting]
 ---
 layout: post
 title: "DB 설계 또는 SQL 문제 제목"
+description: "다룬 데이터베이스 문제와 적용한 설계·SQL 판단을 한두 문장으로 설명합니다."
 date: YYYY-MM-DD
 categories: [database]
 tags: [PostgreSQL, Oracle, SQL]
@@ -138,6 +143,7 @@ tags: [PostgreSQL, Oracle, SQL]
 ---
 layout: post
 title: "개념 또는 학습 제목"
+description: "핵심 개념과 실무에서 어떻게 적용할지 한두 문장으로 설명합니다."
 date: YYYY-MM-DD
 categories: [project-management]
 tags: [PMP, Study]
@@ -174,10 +180,12 @@ tags: [PMP, Study]
 
 - [ ] 표준 카테고리 7개 중 하나를 사용했다.
 - [ ] 태그는 세부 기술, 도구, 상황, 자격증 중심으로 작성했다.
+- [ ] `description`이 글 내용을 정확하게 설명한다.
 - [ ] 고객사명 또는 내부 조직명이 직접 노출되지 않는다.
 - [ ] IP, 계정, 비밀번호, 토큰, 키가 없다.
 - [ ] 내부 경로와 시스템명이 불필요하게 노출되지 않는다.
 - [ ] 회의록 원문이 없다.
 - [ ] 문제, 원인, 해결, 실행 방법이 구분되어 있다.
-- [ ] 제목이 이력서/포트폴리오 링크로 사용하기 적절하다.
+- [ ] 제목이 검색과 이력서/포트폴리오 링크로 사용하기 적절하다.
+- [ ] 이미지가 있으면 의미 있는 `alt` 설명이 있다.
 - [ ] 과장된 표현이 없다.
