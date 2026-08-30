@@ -9,8 +9,7 @@ lang: ko-KR
 future: true
 
 # Google Search Console
-# After adding the site in Search Console, paste only the verification token here.
-google_site_verification:
+google_site_verification: u8hiK-I85rDdzv5nny-fDPiuq2pAyKzC9eL4ak28qOM
 
 # Google Analytics 4
 # Optional. Paste a GA4 measurement/tag ID such as G-XXXXXXXXXX to enable it.
@@ -53,6 +52,9 @@ nav:
 
   - title: Topics
     url: /categories
+
+  - title: Notes
+    url: /notes
 
   - title: Study
     url: /study
