@@ -1,6 +1,6 @@
 # Site setup
 title: SON Kiseok Technical Blog
-description: Backend, Linux, data systemization, security and audit notes for career portfolio.
+description: Java/Spring 백엔드 개발, Linux 운영, 데이터 시스템화, AI 개발 워크플로, 보안·감사 경험을 문제 해결 중심으로 정리하는 기술 블로그입니다.
 url: https://son1004007.github.io
 baseurl: ""
 paginate: 5
