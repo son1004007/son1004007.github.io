@@ -12,6 +12,10 @@ future: true
 # After adding the site in Search Console, paste only the verification token here.
 google_site_verification:
 
+# Google Analytics 4
+# Optional. Paste a GA4 measurement/tag ID such as G-XXXXXXXXXX to enable it.
+google_analytics:
+
 # Gems
 plugins:
   - jekyll-gist
@@ -34,9 +38,6 @@ exclude:
 sass:
   sass_dir: _sass
   style: :compressed
-
-# Options
-# ga_analytics: UA-000000-0
 
 # Author
 author:
