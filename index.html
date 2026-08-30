@@ -16,151 +16,129 @@ description: Java/Spring 백엔드 개발, Linux 운영, 데이터 시스템화�
     대화에서 끝난 내용을 GitHub에 남겨 다음 작업과 다른 AI 세션에서도 다시 사용할 수 있게 만드는 것이 이 블로그의 중요한 주제 중 하나입니다.
   </p>
 
-  <p>
-    이 블로그는 단순 학습 기록이 아니라, 실무에서 겪은 문제를 재사용 가능한 기술 문서로 정리하고
-    이력서와 포트폴리오에서 근거 자료로 활용하기 위한 공간입니다.
-  </p>
-</section>
-
-<section class="post">
-  <h2>제가 일하고 기록하는 방식</h2>
-
   <blockquote>
     대화 → 문제 정의 → 계획 → 구현 → 테스트 / 검증 → GitHub 기록 → 다음 작업
   </blockquote>
 
   <p>
-    AI가 작성한 답변 자체를 결과물로 보지 않습니다. 실제 코드, 테스트, 로그, Git 변경 이력처럼 확인 가능한 근거를 남기고,
-    그 과정에서 다시 사용할 가치가 있는 내용을 공개 가능한 형태로 정리해 블로그 글로 전환합니다.
+    기술·업무 기록은 아래 목록에서 주제별로 확인할 수 있습니다. 주택, 생활계획처럼 기술 블로그의 본문 흐름과 다른 개인 기록은
+    <a href="{{ '/notes/' | relative_url }}">Notes</a>에 별도로 정리합니다.
   </p>
-
-  <p>
-    이 방식으로 블로그 작성 과정도 별도의 일이 아니라 실제 개발 업무의 마지막 단계에 가깝게 만들고 있습니다.
-    시작 배경은
-    <a href="{{ '/career/2026/06/21/start-github-pages-blog-with-chatgpt/' | relative_url }}">ChatGPT를 활용해 GitHub Pages 기술 블로그를 시작합니다</a>에서 확인할 수 있습니다.
-  </p>
-</section>
-
-<section class="post">
-  <h2>이 블로그에서 확인할 수 있는 것</h2>
-
-  <ul>
-    <li>Java / Spring Boot 기반 백엔드 개발 경험</li>
-    <li>Linux, Nginx, Apache, Tomcat 기반 웹 서비스 운영 경험</li>
-    <li>PostgreSQL, Oracle, Tibero 등 관계형 데이터베이스 실무 경험</li>
-    <li>데이터 분석 결과를 웹 서비스와 운영 시스템으로 연결하는 경험</li>
-    <li>ChatGPT / Codex를 개발·검증·문서화 Workflow에 적용하는 방법</li>
-    <li>정보보안, 내부통제, 감사/감리 직무 전환을 위한 학습 기록</li>
-  </ul>
 </section>
 
 <section class="post">
   <h2>먼저 볼 글</h2>
-
-  <p>
-    처음 방문했다면 아래 글부터 보면 이 블로그의 목적과 작성 방향을 빠르게 파악할 수 있습니다.
-  </p>
-
   <ul>
-    <li>
-      <a href="{{ '/career/2026/06/21/start-github-pages-blog-with-chatgpt/' | relative_url }}">
-        ChatGPT를 활용해 GitHub Pages 기술 블로그를 시작합니다
-      </a>
-    </li>
-    <li>
-      <a href="{{ '/infrastructure/2026/06/22/rocky-linux-disk-mount-failure/' | relative_url }}">
-        Rocky Linux 디스크 마운트 실패 대응 절차
-      </a>
-    </li>
-    <li>
-      <a href="{{ '/infrastructure/2026/06/22/apache-virtualhost-404-troubleshooting/' | relative_url }}">
-        Apache VirtualHost 404 장애 원인 분석
-      </a>
-    </li>
-    <li>
-      <a href="{{ '/infrastructure/2026/06/22/cloudbeaver-with-podman/' | relative_url }}">
-        Podman 기반 CloudBeaver 운영 검토
-      </a>
-    </li>
-    <li>
-      <a href="{{ '/data-systemization/2026/06/22/data-analysis-systemization/' | relative_url }}">
-        분석 결과를 웹 서비스로 시스템화할 때 고려할 점
-      </a>
-    </li>
+    <li><a href="{{ '/career/2026/06/21/start-github-pages-blog-with-chatgpt/' | relative_url }}">ChatGPT를 활용해 GitHub Pages 기술 블로그를 시작합니다</a></li>
+    <li><a href="{{ '/infrastructure/2026/06/22/rocky-linux-disk-mount-failure/' | relative_url }}">Rocky Linux 디스크 마운트 실패 대응 절차</a></li>
+    <li><a href="{{ '/infrastructure/2026/06/22/apache-virtualhost-404-troubleshooting/' | relative_url }}">Apache VirtualHost 404 장애 원인 분석</a></li>
+    <li><a href="{{ '/data-systemization/2026/06/22/data-analysis-systemization/' | relative_url }}">분석 결과를 웹 서비스로 시스템화할 때 고려할 점</a></li>
   </ul>
+</section>
+
+<section class="post">
+  <h2>기술·업무 글 목록</h2>
+  <p>최신 글을 크게 노출하는 피드 대신, 작성한 글을 분야별 목록으로 정리합니다.</p>
+
+  {% assign backend_posts = site.categories.backend %}
+  {% if backend_posts %}
+  <h3>Backend</h3>
+  <ul>
+    {% for post in backend_posts %}
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% assign database_posts = site.categories.database %}
+  {% if database_posts %}
+  <h3>Database</h3>
+  <ul>
+    {% for post in database_posts %}
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% assign infrastructure_posts = site.categories.infrastructure %}
+  {% if infrastructure_posts %}
+  <h3>Infrastructure</h3>
+  <ul>
+    {% for post in infrastructure_posts %}
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% assign data_systemization_posts = site.categories['data-systemization'] %}
+  {% if data_systemization_posts %}
+  <h3>Data Systemization</h3>
+  <ul>
+    {% for post in data_systemization_posts %}
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% assign security_audit_posts = site.categories['security-audit'] %}
+  {% if security_audit_posts %}
+  <h3>Security &amp; Audit</h3>
+  <ul>
+    {% for post in security_audit_posts %}
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% assign project_management_posts = site.categories['project-management'] %}
+  {% if project_management_posts %}
+  <h3>Project Management</h3>
+  <ul>
+    {% for post in project_management_posts %}
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% assign career_posts = site.categories.career %}
+  {% if career_posts %}
+  <h3>Career / AI Workflow</h3>
+  <ul>
+    {% for post in career_posts %}
+      {% unless post.tags contains 'Personal' or post.tags contains 'Housing' %}
+      <li><a href="{{ post.url | relative_url }}">{{ post.title }}</a> <small>{{ post.date | date: '%Y-%m-%d' }}</small></li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+
+<section class="post">
+  <h2>개인 기록</h2>
+  <p>
+    주택, 생활계획 등 개인적인 의사결정 기록은 기술·업무 글과 분리합니다.
+    <a href="{{ '/notes/' | relative_url }}">Notes 목록 보기</a>
+  </p>
 </section>
 
 <section class="post">
   <h2>글 작성 기준</h2>
-
-  <p>
-    대부분의 글은 아래 구조로 작성합니다.
-  </p>
-
   <blockquote>
-    문제점 → 원인 → 해결 → 실행 방법 → 검증 → 재발 방지 / 개선 방향 → 포트폴리오 관점의 의미
+    문제점 → 원인 → 해결 → 실행 방법 → 검증 → 재발 방지 / 개선 방향
   </blockquote>
-
   <p>
     특정 고객사나 내부 시스템 정보는 공개하지 않고, 실무 경험을 일반화하여 다른 환경에서도 참고할 수 있는 형태로 정리합니다.
   </p>
 </section>
-
-<section class="post">
-  <h2>카테고리</h2>
-
-  <p>
-    카테고리는 글의 큰 목적을 나타내고, 태그는 세부 기술과 키워드를 나타냅니다.
-  </p>
-
-  <ul>
-    <li><strong>backend</strong>: Java, Spring Boot, API, 인증/권한, 웹 애플리케이션 구조</li>
-    <li><strong>database</strong>: SQL, DB 설계, Oracle, PostgreSQL, Tibero, 데이터 모델링</li>
-    <li><strong>infrastructure</strong>: Linux, Nginx, Apache, Tomcat, Podman, 배포, 장애 대응</li>
-    <li><strong>data-systemization</strong>: 분석 결과를 DB, API, 화면, 운영 시스템으로 연결하는 작업</li>
-    <li><strong>security-audit</strong>: 보안, 접근통제, 로그관리, 내부통제, CISA, ISMS-P</li>
-    <li><strong>project-management</strong>: PMP, 요구사항 정리, 업무일지, 보고, 고객 커뮤니케이션</li>
-    <li><strong>career</strong>: 이직, 포트폴리오, 기술 블로그 운영, 경력 방향</li>
-  </ul>
-
-  <p>
-    카테고리별 글은 <a href="{{ '/categories/' | relative_url }}">Topics</a>, 자세한 소개는 <a href="{{ '/about/' | relative_url }}">About</a>, 학습 방향은 <a href="{{ '/study/' | relative_url }}">Study</a>에서 확인할 수 있습니다.
-  </p>
-</section>
-
-<section class="post">
-  <h2>최신 글</h2>
-</section>
-
-<div class="posts">
-  {% for post in paginator.posts %}
-  <article class="post">
-    <h1 class="post-title">
-      <a href="{{ post.url | relative_url }}">
-        {{ post.title }}
-      </a>
-    </h1>
-
-    <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">{{ post.date | date_to_string }}</time>
-
-    {{ post.excerpt }}
-
-    <p>
-      <a href="{{ post.url | relative_url }}">Read more</a>
-    </p>
-  </article>
-  {% endfor %}
-</div>
-
-<div class="pagination">
-  {% if paginator.next_page %}
-    <a class="pagination-item older" href="{{ paginator.next_page_path | relative_url }}">Older</a>
-  {% else %}
-    <span class="pagination-item older">Older</span>
-  {% endif %}
-  {% if paginator.previous_page %}
-    <a class="pagination-item newer" href="{{ paginator.previous_page_path | relative_url }}">Newer</a>
-  {% else %}
-    <span class="pagination-item newer">Newer</span>
-  {% endif %}
-</div>
