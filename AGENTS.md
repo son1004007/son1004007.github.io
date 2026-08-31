@@ -4,6 +4,23 @@
 
 When GitHub access is available, before substantive work read `son1004007/ai-agent-workflow-playbook/CONTROL.md`, then return here and follow this repository's public-blog rules. The global control provides cross-repository discovery and shared verification rules. **This repository remains the source of truth for public blog structure, publication policy, and sanitized public content.**
 
+## Public Web Screenshot / Blogshot
+
+공개 웹 화면이 글의 설명이나 검증 근거를 실질적으로 개선하고 GitHub 접근이 가능한 경우, 사용자가 직접 브라우저를 열어 캡처하도록 반복 요청하지 않습니다.
+
+이때 private `son1004007/device-control` 저장소의 `docs/BLOGSHOT.md`를 읽고 현재 검증된 `[blogshot]` Issue 계약을 사용합니다. 이 public 저장소에는 runner, SSH, NAS, credential 같은 실행 인프라 세부정보를 복제하지 않습니다.
+
+기본 원칙은 다음과 같습니다.
+
+- credential이 필요 없는 공개 HTTP(S) 페이지에만 자동 사용합니다.
+- 로그인 페이지, 사내/내부망, LAN, 관리자 화면, 인증 세션이 필요한 사이트에는 v1 Blogshot을 사용하지 않습니다.
+- 장식 목적의 이미지는 만들지 않고, 실제 UI 상태·오류·설정 결과·완성된 공개 사이트처럼 시각적 증거가 유용할 때만 사용합니다.
+- 캡처가 성공하면 private Actions artifact의 PNG와 metadata를 확인하고, 이 저장소의 적절한 `assets/images/blog/` 경로에 추가한 뒤 의미 있는 `alt` 텍스트로 글에 연결합니다.
+- 이미지 반영 후 GitHub Pages 빌드/게시 결과를 검증하고, 해당 `[blogshot]` Issue를 완료 처리합니다.
+- private `device-control`에 접근할 수 없는 Agent는 실행 경계를 추측하거나 우회하지 않습니다. 스크린샷 없이도 글의 목적을 달성할 수 있으면 텍스트·코드·Mermaid 등으로 진행하고, 꼭 필요한 경우에만 사용자에게 필요한 조치를 요청합니다.
+
+Blogshot은 공개 블로그 작성 보조 경로일 뿐이며, 이 저장소의 `Public Safety Rules`보다 우선하지 않습니다. 캡처 이미지에도 고객사 정보, 인증정보, 개인정보 또는 공개하면 안 되는 내부 화면을 포함하지 않습니다.
+
 For CISA work, the private `son1004007/cisa-playbook` repository remains the source of truth for application code and learner data. Publish only sanitized aggregate analysis to `cisa-study.md`; never copy proprietary question text, answers, rationales, credentials, private infrastructure details, or personal data into this public repository.
 
 이 파일은 ChatGPT, Codex, Claude Code 등 AI 도구가 이 저장소를 수정할 때 먼저 읽어야 하는 작업 기준입니다.
