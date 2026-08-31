@@ -23,21 +23,35 @@ tags: [ChatGPT, GitHub Pages, Portfolio, Backend, DevOps]
 
 첫째, 개발자의 작업 흐름과 잘 맞습니다. Markdown으로 글을 작성하고, Git으로 변경 이력을 관리하며, GitHub에 push하면 블로그로 배포할 수 있습니다.
 
+실제 블로그 저장소도 `_posts`, `assets`, `docs`, Jekyll 설정 파일을 일반 코드 저장소처럼 함께 관리합니다.
+
+![GitHub 저장소의 블로그 파일과 Markdown 글 관리 구조](/assets/images/blog/github-blog-repository-structure.webp)
+
+*현재 블로그 저장소의 파일 목록. Markdown 글, 이미지, 문서와 Jekyll 설정을 하나의 Git 저장소에서 함께 관리합니다.*
+
 둘째, 포트폴리오와 연결하기 좋습니다. 이력서에는 짧게 쓸 수밖에 없는 경험도 블로그에서는 문제 상황, 원인 분석, 해결 과정, 개선 방향까지 설명할 수 있습니다.
 
 셋째, 코드와 문서를 함께 관리할 수 있습니다. 단순한 회고 글이 아니라 설정 파일, 명령어, 체크리스트, 장애 대응 절차를 함께 정리할 수 있습니다.
 
-### 현재 공개된 블로그 화면
+GitHub에 반영한 변경은 GitHub Pages의 빌드와 배포 단계를 거쳐 공개 사이트로 연결됩니다.
 
-현재 GitHub Pages 홈은 최신 글을 시간순으로 나열하기보다 주제별 글 목록을 먼저 보여주고, 기술·업무·학습 기록과 Life / Notes를 분리해 탐색할 수 있도록 구성했습니다.
+![GitHub Actions에서 GitHub Pages 빌드와 배포가 성공한 요약 화면](/assets/images/blog/github-pages-deployment-success.webp)
 
-![SON Kiseok GitHub Pages 블로그 홈 화면](/assets/images/blog/github-pages-blog-home.png)
-
-*현재 공개 중인 GitHub Pages 홈 화면.*
+*실제 GitHub Pages 배포 결과. build, report-build-status, deploy 단계가 모두 성공한 뒤 공개 사이트로 연결된 상태입니다.*
 
 ## 왜 ChatGPT를 활용하는가
 
-ChatGPT는 단순히 질문에 답을 받는 도구가 아니라, 실무 경험을 문서화하는 데 유용한 도구입니다.
+ChatGPT는 단순히 질문에 답을 받거나 글을 대신 써 주는 도구보다, 실무 경험을 정리하고 검증 가능한 기록으로 옮기는 작업 흐름의 보조 도구로 사용합니다.
+
+```text
+대화
+-> 문제와 판단 근거 정리
+-> 공개 가능 여부 확인
+-> Markdown 작성
+-> GitHub 변경
+-> Pages 배포
+-> 실제 결과 검증
+```
 
 업무 중 겪은 문제를 설명하면 ChatGPT를 통해 다음 형태로 정리할 수 있습니다.
 
@@ -48,7 +62,7 @@ ChatGPT는 단순히 질문에 답을 받는 도구가 아니라, 실무 경험�
 - 재발 방지 방안
 - 공개 가능한 포트폴리오용 글
 
-실무에서는 문제를 해결하는 데 집중하다 보면 과정을 남기지 못하는 경우가 많습니다. ChatGPT를 활용하면 대화 내용을 바탕으로 기술 문서, 회고, 체크리스트, 블로그 글 초안으로 빠르게 변환할 수 있습니다.
+실무에서는 문제를 해결하는 데 집중하다 보면 과정을 남기지 못하는 경우가 많습니다. ChatGPT를 활용하면 대화 내용을 바탕으로 기술 문서, 회고, 체크리스트, 블로그 글 초안으로 빠르게 변환할 수 있습니다. 다만 AI의 답변이나 초안을 그대로 게시하지 않고 코드, 테스트, 로그, Git 이력 또는 실제 배포 결과로 확인할 수 있는 부분은 다시 검증합니다.
 
 ## 이 블로그에 정리할 내용
 
