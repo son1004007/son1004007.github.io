@@ -27,6 +27,14 @@ tags: [ChatGPT, GitHub Pages, Portfolio, Backend, DevOps]
 
 셋째, 코드와 문서를 함께 관리할 수 있습니다. 단순한 회고 글이 아니라 설정 파일, 명령어, 체크리스트, 장애 대응 절차를 함께 정리할 수 있습니다.
 
+### 현재 공개된 블로그 화면
+
+현재 GitHub Pages 홈은 최신 글을 시간순으로 나열하기보다 주제별 글 목록을 먼저 보여주고, 기술·업무·학습 기록과 Life / Notes를 분리해 탐색할 수 있도록 구성했습니다.
+
+![SON Kiseok GitHub Pages 블로그 홈 화면](/assets/images/blog/github-pages-blog-home.png)
+
+*현재 공개 중인 GitHub Pages 홈 화면.*
+
 ## 왜 ChatGPT를 활용하는가
 
 ChatGPT는 단순히 질문에 답을 받는 도구가 아니라, 실무 경험을 문서화하는 데 유용한 도구입니다.
