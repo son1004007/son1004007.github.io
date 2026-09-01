@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "ChatGPT를 활용해 GitHub Pages 기술 블로그를 시작합니다"
-description: "ChatGPT로 실무 문제 해결 과정을 정리하고 Markdown과 GitHub Pages를 이용해 재사용 가능한 기술 기록과 포트폴리오로 만드는 방법을 소개합니다."
+description: "ChatGPT와 GitHub Pages를 활용해 실무 문제 해결 과정을 재사용 가능한 기술 자산과 포트폴리오로 정리하는 블로그의 개설 취지와 운영 원칙을 소개합니다."
 date: 2026-06-21
 categories: [career]
 tags: [ChatGPT, GitHub Pages, Portfolio, Backend, DevOps]
@@ -17,27 +17,23 @@ tags: [ChatGPT, GitHub Pages, Portfolio, Backend, DevOps]
 
 ## 왜 GitHub Pages인가
 
-기술 블로그를 만들 수 있는 방법은 많습니다. Tistory, Velog, Medium, Notion, Obsidian 기반 정적 사이트 등 여러 선택지가 있습니다.
+기술 블로그를 만들 수 있는 방법은 많습니다. Tistory, Velog, Medium, Notion, Obsidian 기반 정적 사이트 등 여러 선택지가 있습니다. 이들 플랫폼도 간편한 작성과 공개에 장점이 있지만, 저는 Markdown 글과 이미지, 정적 사이트 설정, 변경 이력을 하나의 Git 저장소에서 관리하고 개발 작업 흐름과 연결할 수 있다는 점을 우선했습니다.
 
-그중 GitHub Pages를 선택한 이유는 명확합니다.
-
-첫째, 개발자의 작업 흐름과 잘 맞습니다. Markdown으로 글을 작성하고, Git으로 변경 이력을 관리하며, GitHub에 push하면 블로그로 배포할 수 있습니다.
-
-실제 블로그 저장소도 `_posts`, `assets`, `docs`, Jekyll 설정 파일을 일반 코드 저장소처럼 함께 관리합니다.
-
-![GitHub 저장소의 블로그 파일과 Markdown 글 관리 구조](/assets/images/blog/github-blog-repository-structure.webp)
-
-*현재 블로그 저장소의 파일 목록. Markdown 글, 이미지, 문서와 Jekyll 설정을 하나의 Git 저장소에서 함께 관리합니다.*
-
-둘째, 포트폴리오와 연결하기 좋습니다. 이력서에는 짧게 쓸 수밖에 없는 경험도 블로그에서는 문제 상황, 원인 분석, 해결 과정, 개선 방향까지 설명할 수 있습니다.
-
-셋째, 코드와 문서를 함께 관리할 수 있습니다. 단순한 회고 글이 아니라 설정 파일, 명령어, 체크리스트, 장애 대응 절차를 함께 정리할 수 있습니다.
-
-GitHub에 반영한 변경은 GitHub Pages의 빌드와 배포 단계를 거쳐 공개 사이트로 연결됩니다.
+첫째, 개발자의 작업 흐름과 잘 맞습니다. GitHub Pages 게시 설정과 배포 워크플로를 구성해 두면 Markdown으로 글을 작성하고 Git으로 변경 이력을 관리한 뒤, GitHub에 push한 변경을 자동으로 빌드하고 사이트에 배포할 수 있습니다.
 
 ![GitHub Actions에서 GitHub Pages 빌드와 배포가 성공한 요약 화면](/assets/images/blog/github-pages-deployment-success.webp)
 
-*실제 GitHub Pages 배포 결과. build, report-build-status, deploy 단계가 모두 성공한 뒤 공개 사이트로 연결된 상태입니다.*
+*이 저장소의 GitHub Pages 워크플로에서 build, report-build-status, deploy 작업이 성공한 화면입니다. 실제 공개 페이지의 글과 이미지가 정상 표시되는지는 배포 후 별도로 확인합니다.*
+
+이 저장소에서는 `_posts`, `assets`, `docs`, Jekyll(정적 사이트 생성기) 설정 파일을 일반 코드 저장소처럼 함께 관리합니다.
+
+![GitHub 저장소의 블로그 파일과 Markdown 글 관리 구조](/assets/images/blog/github-blog-repository-structure.webp)
+
+*Markdown 글, 이미지, 문서와 Jekyll 설정을 하나의 Git 저장소에서 함께 관리하는 구조입니다.*
+
+둘째, GitHub 프로필과 포트폴리오를 연결하기 좋습니다. 코드 저장소와 공개 기술 기록을 같은 GitHub 생태계에서 관리할 수 있어, 이력서에서 짧게 설명한 경험을 더 구체적인 문제 상황과 해결 과정으로 연결하기 쉽습니다.
+
+셋째, 코드와 문서를 함께 관리할 수 있습니다. 단순한 회고 글이 아니라 설정 파일, 명령어, 체크리스트, 장애 대응 절차를 함께 정리할 수 있습니다.
 
 ## 왜 ChatGPT를 활용하는가
 
@@ -53,6 +49,8 @@ ChatGPT는 단순히 질문에 답을 받거나 글을 대신 써 주는 도구�
 -> 실제 결과 검증
 ```
 
+배포 워크플로가 성공했다고 바로 완료로 보지는 않습니다. 공개 URL에서 글, 이미지, 링크가 의도대로 표시되는지까지 확인해야 마지막 단계인 실제 결과 검증이 끝난 것으로 봅니다.
+
 업무 중 겪은 문제를 설명하면 ChatGPT를 통해 다음 형태로 정리할 수 있습니다.
 
 - 문제점
@@ -62,7 +60,7 @@ ChatGPT는 단순히 질문에 답을 받거나 글을 대신 써 주는 도구�
 - 재발 방지 방안
 - 공개 가능한 포트폴리오용 글
 
-실무에서는 문제를 해결하는 데 집중하다 보면 과정을 남기지 못하는 경우가 많습니다. ChatGPT를 활용하면 대화 내용을 바탕으로 기술 문서, 회고, 체크리스트, 블로그 글 초안으로 빠르게 변환할 수 있습니다. 다만 AI의 답변이나 초안을 그대로 게시하지 않고 코드, 테스트, 로그, Git 이력 또는 실제 배포 결과로 확인할 수 있는 부분은 다시 검증합니다.
+실무에서는 문제를 해결하는 데 집중하다 보면 과정을 남기지 못하는 경우가 많습니다. ChatGPT를 활용하면 대화 내용을 바탕으로 기술 문서, 회고, 체크리스트, 블로그 글 초안으로 빠르게 변환할 수 있습니다. 다만 AI의 답변이나 초안을 그대로 게시하지 않고 코드, 테스트, 로그와 실제 배포 결과로 동작을 검증하고, Git 이력으로 변경 과정을 확인합니다. 업무 내용을 AI에 입력할 때도 고객사명, 내부 주소, 계정·인증정보처럼 공개하면 안 되는 정보는 먼저 제거하거나 일반화합니다.
 
 ## 이 블로그에 정리할 내용
 
@@ -82,7 +80,7 @@ Linux, Rocky Linux, Ubuntu, Nginx, Apache, Tomcat, SSL, Podman, Docker, 서버 �
 
 ### Data Systemization
 
-데이터 분석 결과를 웹 서비스나 운영 시스템으로 연결하는 과정에서 필요한 개발, 배포, 운영 기준을 정리합니다.
+데이터 분석 결과를 DB, API, 화면, 웹 서비스와 운영 시스템으로 연결하는 과정에서 필요한 개발, 배포, 운영 기준을 정리합니다.
 
 ### Project Management
 
