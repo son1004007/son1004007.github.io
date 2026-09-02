@@ -5,6 +5,9 @@ description: "ChatGPT와 GitHub Pages를 활용해 실무 문제 해결 과정�
 date: 2026-06-21
 categories: [career]
 tags: [ChatGPT, GitHub Pages, Portfolio, Backend, DevOps]
+tistory:
+  publish: true
+  category: ""
 ---
 
 ## 배경
