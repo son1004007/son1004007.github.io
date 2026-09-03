@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "SSH -L 로컬 포트 포워딩: 네트워크 구조와 실무 예제"
-description: "SSH -L 로컬 포트 포워딩의 동작 구조를 네트워크 흐름으로 설명하고, 내부 웹서비스·PostgreSQL·Jupyter 접근 예제와 보안 및 장애 대응 방법을 정리합니다."
+description: "SSH -L 로컬 포트 포워딩의 동작 구조를 네트워크 흐름으로 설명하고, 내부 웹서비스·PostgreSQL·Jupyter 접근 예제와 CLI 서버의 웹 인증 구성, 보안 및 장애 대응 방법을 정리합니다."
 date: 2026-09-03
 categories: [infrastructure]
 tags: [SSH, OpenSSH, Port Forwarding, Tunnel, Network, Linux]
@@ -120,6 +120,189 @@ LOCAL_NODE:LOCAL_PORT
   -> SSH_SERVER
   -> SSH_SERVER가 접근 가능한 DESTINATION_HOST:DESTINATION_PORT
 ```
+
+## CLI만 가능한 Linux 서버에서 웹 인증이 필요한 경우
+
+`ssh -L`은 DB나 웹서비스 접근뿐 아니라 **GUI가 없는 Linux 서버에서 웹 로그인 화면이 필요한 자동화 작업**에도 유용합니다.
+
+예를 들어 다음과 같은 경우입니다.
+
+- CLI 전용 서버에서 Tistory/Kakao 로그인을 최초 한 번 수행해야 합니다.
+- OAuth 로그인 중 브라우저 승인이 필요합니다.
+- 2차 인증, OTP 승인, CAPTCHA 등 때문에 완전한 headless 로그인 자동화가 적절하지 않습니다.
+- 로그인 이후에는 Playwright 같은 브라우저 자동화가 저장된 세션을 재사용해야 합니다.
+
+가능하면 서비스가 공식적으로 device-code나 CLI 인증 방식을 제공할 때는 그 방식을 먼저 사용하는 것이 단순합니다. 하지만 **실제 브라우저 화면에서 로그인을 완료해야 하는 서비스라면**, 서버에 임시 브라우저를 띄우고 그 화면만 로컬 PC로 전달할 수 있습니다.
+
+### 구성
+
+```text
+[내 PC]
+Browser
+  |
+  | http://127.0.0.1:16080
+  v
+127.0.0.1:16080
+  |
+  | ssh -L
+  v
+[CLI Linux Server]
+127.0.0.1:6080
+[noVNC]
+  |
+  v
+VNC / Virtual Display
+  |
+  v
+Chromium / Playwright Browser
+  |
+  v
+Tistory / Kakao / OAuth Provider
+```
+
+중요한 점은 **브라우저 프로세스와 로그인 세션은 Linux 서버에 존재하고, 화면만 SSH 터널을 통해 내 PC 브라우저에서 보는 것**입니다.
+
+따라서 인증이 끝난 뒤 서버에 남은 브라우저 세션을 이후 자동화에서 그대로 사용할 수 있습니다.
+
+### 1. Linux 서버에 임시 GUI 브라우저 준비
+
+CLI 서버에서는 일반적으로 다음 구성 중 하나를 사용합니다.
+
+```text
+Xvfb 또는 가상 디스플레이
+  + Chromium/Chrome
+  + VNC server
+  + noVNC
+```
+
+컨테이너로 이 구성을 격리해도 됩니다. 인증용 브라우저는 장시간 외부에 공개해 두기보다 **필요할 때만 임시로 실행하고 인증이 끝나면 종료**하는 편이 안전합니다.
+
+### 2. noVNC를 서버의 localhost에만 열기
+
+VNC 서버가 `127.0.0.1:5901`에서 실행 중이라고 가정하면 noVNC의 `novnc_proxy`는 다음과 같이 localhost에만 바인딩할 수 있습니다.
+
+```bash
+./utils/novnc_proxy \
+  --vnc localhost:5901 \
+  --listen localhost:6080
+```
+
+이렇게 하면 `6080` 포트는 인터넷에 직접 노출되지 않습니다.
+
+### 3. 내 PC에서 SSH 로컬 포워딩
+
+내 PC에서 다음 명령을 실행합니다.
+
+```bash
+ssh -NT \
+  -o ExitOnForwardFailure=yes \
+  -L 127.0.0.1:16080:127.0.0.1:6080 \
+  user@cli-server.example.com
+```
+
+이번 명령도 앞에서 설명한 구조와 동일합니다.
+
+```text
+내 PC 127.0.0.1:16080
+  -> SSH
+  -> cli-server.example.com
+  -> 서버 자신의 127.0.0.1:6080
+```
+
+내 PC 브라우저에서는 다음 주소를 엽니다.
+
+```text
+http://127.0.0.1:16080/
+```
+
+그러면 실제로는 원격 Linux 서버에서 실행 중인 브라우저 화면을 보게 됩니다.
+
+### 4. Tistory/Kakao 같은 웹 로그인을 직접 완료
+
+이제 원격 브라우저 화면에서 정상적인 로그인 절차를 진행합니다.
+
+```text
+아이디/비밀번호 입력
+  -> 필요한 경우 2차 인증
+  -> CAPTCHA가 나오면 사용자가 직접 처리
+  -> Tistory 관리 화면 등 인증 완료 상태 확인
+```
+
+OTP나 CAPTCHA를 자동 우회하는 것이 아니라 **사람이 필요한 인증 단계만 원격 브라우저에서 정상적으로 수행**하는 구조입니다.
+
+### 5. 인증 세션을 서버에 저장
+
+Playwright는 로그인된 Browser Context의 cookies, local storage 등 인증 상태를 `storageState` 파일로 저장하고 이후 새 Context에서 다시 사용할 수 있습니다.
+
+예를 들면 다음과 같습니다.
+
+```javascript
+await context.storageState({
+  path: '/var/lib/browser-auth/storage-state.json'
+});
+```
+
+이후 자동화에서는 저장한 상태를 다시 로드할 수 있습니다.
+
+```javascript
+const context = await browser.newContext({
+  storageState: '/var/lib/browser-auth/storage-state.json'
+});
+```
+
+그러면 정상적인 세션 유효기간 동안에는 매번 사람이 로그인하지 않고 headless 브라우저가 인증 상태를 재사용할 수 있습니다.
+
+### 6. 세션 파일은 인증정보로 취급
+
+`storageState` 같은 파일에는 세션 쿠키 등 계정 접근에 사용할 수 있는 정보가 포함될 수 있습니다.
+
+따라서 다음 원칙을 지키는 것이 중요합니다.
+
+```text
+Git repository에 commit하지 않기
+로그나 CI artifact에 출력하지 않기
+서버의 전용 디렉터리에만 저장
+파일 권한을 최소화하기 (예: 0600)
+자동화 컨테이너에도 필요한 파일만 mount
+세션이 만료되면 기존 파일을 폐기하고 다시 인증
+```
+
+Playwright 공식 문서도 저장된 인증 상태 파일에 민감한 쿠키와 헤더가 포함될 수 있으므로 repository에 넣지 말 것을 권고합니다.
+
+### 7. 운영 시에는 인증과 게시를 분리
+
+Tistory 게시 자동화를 예로 들면 다음 구조가 실용적입니다.
+
+```text
+최초 또는 세션 만료 시
+사용자
+  -> ssh -L
+  -> 임시 noVNC
+  -> 원격 Chromium에서 로그인
+  -> storageState 저장
+
+평상시
+Scheduler
+  -> Headless Playwright
+  -> storageState 로드
+  -> Tistory 관리 화면 접근
+  -> 글 작성/수정
+  -> 결과 확인
+```
+
+자동 게시 중 로그인 페이지로 리다이렉트되거나 세션이 만료된 것이 확인되면, 비밀번호 재시도나 CAPTCHA 우회를 반복하는 대신 **게시 작업을 중단하고 재인증이 필요하다고 처리**하는 것이 안전합니다.
+
+### SSH 포워딩 자체가 서버 정책으로 막혀 있다면
+
+서버에서 `AllowTcpForwarding` 등이 정책상 비활성화되어 있으면 위 `ssh -L` 방식은 사용할 수 없습니다.
+
+이 경우 포워딩 제한을 무조건 해제하기보다 다음 순서로 판단하는 편이 좋습니다.
+
+1. 관리자가 허용한다면 특정 인증용 목적지만 `PermitOpen` 등으로 제한적으로 허용합니다.
+2. 신뢰할 수 있는 사설 LAN 안의 서버라면 noVNC를 **LAN 주소에 임시로만 바인딩**하고 방화벽으로 접근 출발지를 제한하는 방식을 검토합니다.
+3. 인증이 완료되면 임시 브라우저와 VNC/noVNC 서비스를 즉시 종료합니다.
+
+즉 **웹 인증을 위해 CLI 서버 자체에 데스크톱 환경을 상시 공개할 필요는 없습니다.** 필요한 시점에만 임시 브라우저를 띄우고, `ssh -L`로 화면 접근 경로를 제한한 뒤, 인증 상태만 안전하게 보존하는 방식으로 구성할 수 있습니다.
 
 ## 예제 1. SSH 서버의 로컬 웹서비스 접속
 
@@ -551,3 +734,5 @@ SSH_SERVER가 DESTINATION_HOST:DESTINATION_PORT로 연결한다.
 - OpenSSH `ssh(1)`: <https://man.openbsd.org/ssh>
 - OpenSSH `ssh_config(5)`: <https://man.openbsd.org/ssh_config>
 - OpenSSH `sshd_config(5)`: <https://man.openbsd.org/sshd_config>
+- Playwright Authentication: <https://playwright.dev/docs/auth>
+- noVNC: <https://github.com/novnc/noVNC>
