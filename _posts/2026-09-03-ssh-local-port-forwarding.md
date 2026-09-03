@@ -5,6 +5,9 @@ description: "SSH -L 로컬 포트 포워딩의 동작 구조를 네트워크 �
 date: 2026-09-03
 categories: [infrastructure]
 tags: [SSH, OpenSSH, Port Forwarding, Tunnel, Network, Linux]
+tistory:
+  publish: true
+  category: ""
 ---
 
 SSH 서버에는 접속할 수 있지만, 그 서버 자신이나 서버가 접근할 수 있는 내부망 서비스는 외부에 공개되어 있지 않은 경우가 많습니다.
