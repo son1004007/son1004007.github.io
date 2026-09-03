@@ -10,16 +10,58 @@ tistory:
   category: ""
 ---
 
-SSH 서버에는 접속할 수 있지만, 그 서버 자신이나 서버가 접근할 수 있는 내부망 서비스는 외부에 공개되어 있지 않은 경우가 많습니다.
+`ssh -L`은 먼저 **어느 노드가 어디로 접속하는지**를 이해하면 쉽습니다.
 
-이때 서비스를 인터넷에 직접 노출하지 않고 내 PC의 로컬 포트로 안전하게 연결하고 싶다면 `ssh -L` 로컬 포트 포워딩을 사용할 수 있습니다.
+가장 중요한 구조는 다음과 같습니다.
 
-이 글에서는 명령어 문법보다 먼저 **패킷이 실제로 어디에서 어디로 이동하는지**를 기준으로 `ssh -L`을 정리합니다.
+```text
+[Node A: ssh -L 명령을 실행한 노드]
+Application
+  |
+  | 127.0.0.1:LOCAL_PORT
+  v
+SSH Client
+  ||
+  || SSH encrypted channel
+  \/
+[Node B: SSH_SERVER]
+  |
+  | TCP connection
+  v
+[TARGET_IP:TARGET_PORT]
+```
+
+즉 `ssh -L` 명령을 실행한 **Node A에 LOCAL_PORT가 열리고**, 그 포트로 들어온 연결은 **Node B인 SSH 서버를 경유한 뒤**, SSH 서버가 `TARGET_IP:TARGET_PORT`로 실제 TCP 연결을 만듭니다.
+
+따라서 가장 중요한 기준은 다음 한 문장입니다.
+
+> `TARGET_IP` 또는 `destination_host`는 내 PC 기준 목적지가 아니라, **SSH_SERVER가 접속할 수 있는 네트워크 기준의 목적지**입니다.
+
+예를 들어 다음 명령을 실행한다고 가정합니다.
+
+```bash
+ssh -N \
+  -L 127.0.0.1:18080:10.0.20.15:8080 \
+  user@bastion.example.com
+```
+
+이 경우 연결 흐름은 다음과 같습니다.
+
+```text
+내 PC의 127.0.0.1:18080
+  -> bastion.example.com SSH 연결
+  -> Bastion이 10.0.20.15:8080으로 접속
+```
+
+내 PC가 `10.0.20.15`에 직접 접근할 수 없어도 됩니다. **Bastion이 해당 IP와 포트에 접근할 수 있으면**, 내 PC에서는 `127.0.0.1:18080`으로 접속해 그 서비스를 사용할 수 있습니다.
+
+이 구조가 `ssh -L`의 핵심입니다.
 
 ## 문제점
 
-다음과 같은 상황을 자주 만납니다.
+실무에서는 다음과 같은 상황을 자주 만납니다.
 
+- SSH 서버가 접근할 수 있는 내부망 서비스에 내 PC에서는 직접 접근할 수 없습니다.
 - SSH 서버의 `127.0.0.1:8080`에서만 실행되는 웹 애플리케이션을 내 PC 브라우저에서 확인해야 합니다.
 - 외부에서 직접 접근할 수 없는 PostgreSQL, MySQL 같은 내부 DB에 접속해야 합니다.
 - 원격 서버의 Jupyter, 개발 서버, 관리 UI를 인터넷에 공개하고 싶지 않습니다.
@@ -28,7 +70,7 @@ SSH 서버에는 접속할 수 있지만, 그 서버 자신이나 서버가 접�
 
 이런 경우 서비스 포트를 외부에 직접 공개하는 대신, 이미 인증과 암호화가 적용된 SSH 연결을 통로로 사용할 수 있습니다.
 
-## 핵심 개념
+## 핵심 개념과 문법
 
 OpenSSH의 기본 문법은 다음과 같습니다.
 
@@ -44,32 +86,39 @@ ssh -L 127.0.0.1:local_port:destination_host:destination_port user@ssh_server
 
 각 값의 의미는 다음과 같습니다.
 
-| 항목 | 의미 |
-|---|---|
-| `127.0.0.1` | 내 PC에서 포트를 열 주소 |
-| `local_port` | 내 PC 애플리케이션이 접속할 포트 |
-| `destination_host` | SSH 서버 쪽에서 접속할 대상 호스트 |
-| `destination_port` | 대상 서비스 포트 |
-| `ssh_server` | SSH 터널을 만들어 줄 서버 |
+| 항목 | 어느 노드 기준인가 | 의미 |
+|---|---|---|
+| `127.0.0.1` | `ssh -L` 명령을 실행한 로컬 노드 | 포트를 열 주소 |
+| `local_port` | `ssh -L` 명령을 실행한 로컬 노드 | 애플리케이션이 접속할 포트 |
+| `destination_host` | SSH 서버 기준 | SSH 서버가 접속할 대상 호스트/IP |
+| `destination_port` | SSH 서버 기준 | 대상 서비스 포트 |
+| `ssh_server` | 로컬 노드가 접속하는 서버 | 터널을 중계할 SSH 서버 |
 
-가장 중요한 부분은 `destination_host`입니다.
+특히 `destination_host`를 어느 노드 기준으로 해석하는지가 중요합니다.
 
 ```text
 ssh -L 127.0.0.1:18080:127.0.0.1:8080 user@server.example.com
                          ^^^^^^^^^
 ```
 
-여기서 두 번째 `127.0.0.1`은 **내 PC가 아니라 SSH 서버 자신의 loopback 주소**를 의미합니다.
+여기서 두 번째 `127.0.0.1`은 **내 PC가 아니라 SSH 서버 자신의 loopback 주소**입니다.
+
+반대로 다음처럼 내부 IP를 지정했다면,
+
+```bash
+ssh -L 127.0.0.1:18080:10.0.20.15:8080 user@bastion.example.com
+```
+
+`10.0.20.15:8080`에 접속하는 주체는 내 PC가 아니라 `bastion.example.com`입니다.
 
 OpenSSH는 내 PC의 로컬 포트에서 연결을 받은 뒤 SSH 암호화 채널을 통해 SSH 서버로 전달하고, SSH 서버가 다시 `destination_host:destination_port`로 TCP 연결을 만듭니다.
 
 즉 구조를 한 줄로 표현하면 다음과 같습니다.
 
 ```text
-내 PC의 local_port
-  -> SSH 암호화 연결
-  -> SSH Server
-  -> destination_host:destination_port
+LOCAL_NODE:LOCAL_PORT
+  -> SSH_SERVER
+  -> SSH_SERVER가 접근 가능한 DESTINATION_HOST:DESTINATION_PORT
 ```
 
 ## 예제 1. SSH 서버의 로컬 웹서비스 접속
