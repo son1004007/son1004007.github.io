@@ -4,6 +4,16 @@
 
 When GitHub access is available, before substantive work read `son1004007/ai-agent-workflow-playbook/CONTROL.md`, then return here and follow this repository's public-blog rules. The global control provides cross-repository discovery and shared verification rules. **This repository remains the source of truth for public blog structure, publication policy, and sanitized public content.**
 
+## Public career positioning
+
+Career-related public content should preserve this distinction unless the user explicitly changes it:
+
+- purpose: solve real problems and verify that the result actually works;
+- means: software engineering, security, data, architecture, AI, or another appropriate method;
+- AI is **a tool, not the goal**.
+
+For the current public narrative, read `about.md` and `_posts/2026-09-20-ai-is-a-tool-for-problem-solving.md` before substantially rewriting career positioning.
+
 ## Repository Purpose
 
 `son1004007/son1004007.github.io` is a GitHub Pages blog for two kinds of durable public records:
