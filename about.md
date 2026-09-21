@@ -43,6 +43,7 @@ AI를 사용하는 경우에도 답변 자체를 결과로 간주하지 않습�
 처음 방문했다면 아래 글부터 확인하면 됩니다.
 
 - [AI는 목적이 아니라 문제 해결을 위한 수단이다]({{ '/career/2026/09/20/ai-is-a-tool-for-problem-solving/' | relative_url }})
+- [휴대폰에서 NAS 내부 브라우저의 로그인 세션을 안전하게 갱신한 방법]({{ '/infrastructure/2026/09/21/mobile-authentication-for-nas-browser-session/' | relative_url }})
 - [ChatGPT를 활용해 GitHub Pages 기술 블로그를 시작합니다]({{ '/career/2026/06/21/start-github-pages-blog-with-chatgpt/' | relative_url }})
 - [Rocky Linux 디스크 마운트 실패 대응 절차]({{ '/infrastructure/2026/06/22/rocky-linux-disk-mount-failure/' | relative_url }})
 - [Apache VirtualHost 404 장애 원인 분석]({{ '/infrastructure/2026/06/22/apache-virtualhost-404-troubleshooting/' | relative_url }})
