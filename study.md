@@ -48,6 +48,12 @@ title: Study
 - 인증/권한
 - 운영 환경 구성
 
+### Frontend / React
+
+- [React 기본 개념과 용어 정리: 컴포넌트, Props, State, Hook, 렌더링]({{ '/backend/react-fundamentals/' | relative_url }})
+- JSX / TypeScript / State / Hook
+- React와 Spring Boot 또는 FastAPI API 연동
+
 ### Infrastructure / Operations
 
 - Linux
