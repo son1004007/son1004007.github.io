@@ -69,3 +69,8 @@ tags: [AI, LLM, Agent, MCP, LangChain, LangGraph, vLLM, Harness, Study]
 - [LangGraph Overview](https://docs.langchain.com/oss/python/langgraph/overview)
 - [vLLM Documentation](https://docs.vllm.ai/en/stable/)
 - [OpenAI Harness Engineering](https://openai.com/index/harness-engineering/)
+
+## 6. 다음 단계 학습
+
+- [AI 서비스 핵심 원리 - RAG, Tool Calling, Agent, 보안과 평가]({% post_url 2026-10-09-ai-service-engineering-core-principles %})
+- [AI 서비스 개발 면접 질문 10개 - 핵심 키워드와 30초 답변]({% post_url 2026-10-09-ai-service-engineering-interview-questions %})
