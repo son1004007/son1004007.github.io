@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="464" viewBox="0 0 760 464" role="img" aria-labelledby="title desc">
-<title id="title">CORS - 다른 출처의 응답 읽기 허용 정책</title>
-<desc id="desc">다른 출처의 웹페이지: JavaScript가 외부 API에 접근하려고 함 → 사용자 브라우저: Origin·응답 헤더를 확인해 읽기 허용 판단 → API 서버: 허용 Origin·Method·Header 등을 응답. 핵심: CORS는 인증·인가가 아니며 요청 차단도 보장하지 않음</desc>
-<rect width="760" height="464" fill="#ffffff" rx="16"/>
-<text x="380" y="43" font-family="Arial, Noto Sans KR, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#0f766e">CORS - 다른 출처의 응답 읽기 허용 정책</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="540" viewBox="0 0 480 540" role="img" aria-labelledby="title desc">
+<title id="title">CORS · 다른 출처 응답 접근 정책</title>
+<desc id="desc">다른 출처의 웹페이지: JavaScript가 외부 API에 접근 → 사용자 브라우저: 응답 읽기 허용 여부를 판단 → API 서버: Origin 허용 관련 헤더를 응답. 핵심: 교차 출처 응답 접근 정책. 서버의 인증·인가를 대신하지 않음</desc>
+<rect x="0" y="0" width="480" height="540" rx="16" fill="#ffffff"/>
 <g font-family="Arial, Noto Sans KR, sans-serif">
-<rect x="44" y="81" width="672" height="81" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
-  <text x="380" y="113" font-size="24" font-weight="700" text-anchor="middle" fill="#0f172a">다른 출처의 웹페이지</text>
-  <text x="380" y="139" font-size="17" text-anchor="middle" fill="#334155">JavaScript가 외부 API에 접근하려고 함</text>
-<rect x="44" y="193" width="672" height="81" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
-  <text x="380" y="225" font-size="24" font-weight="700" text-anchor="middle" fill="#0f172a">사용자 브라우저</text>
-  <text x="380" y="251" font-size="17" text-anchor="middle" fill="#334155">Origin·응답 헤더를 확인해 읽기 허용 판단</text>
-<rect x="44" y="305" width="672" height="81" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="2"/>
-  <text x="380" y="337" font-size="24" font-weight="700" text-anchor="middle" fill="#0f172a">API 서버</text>
-  <text x="380" y="363" font-size="17" text-anchor="middle" fill="#334155">허용 Origin·Method·Header 등을 응답</text>
-<path d="M380 164 V188" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M372 181 L380 190 L388 181" fill="none" stroke="#0f766e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="401" y="182" font-size="15" fill="#475569">교차 출처 요청</text>
-<path d="M380 276 V300" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M372 293 L380 302 L388 293" fill="none" stroke="#0f766e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="401" y="294" font-size="15" fill="#475569">요청 전달 / 응답 확인</text>
-<rect x="28" y="420" width="704" height="32" rx="9" fill="#f1f5f9"/>
-<text x="380" y="442" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">핵심: CORS는 인증·인가가 아니며 요청 차단도 보장하지 않음</text>
+<text x="240" y="43" font-size="22" font-weight="700" text-anchor="middle" fill="#0f766e">CORS · 다른 출처 응답 접근 정책</text>
+<rect x="21" y="83" width="438" height="94" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8"/>
+<text x="240" y="120" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">다른 출처의 웹페이지</text>
+<text x="240" y="150" font-size="16" text-anchor="middle" fill="#334155">JavaScript가 외부 API에 접근</text>
+<rect x="21" y="210" width="438" height="94" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8"/>
+<text x="240" y="247" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">사용자 브라우저</text>
+<text x="240" y="277" font-size="16" text-anchor="middle" fill="#334155">응답 읽기 허용 여부를 판단</text>
+<rect x="21" y="337" width="438" height="94" rx="14" fill="#f0fdfa" stroke="#0f766e" stroke-width="1.8"/>
+<text x="240" y="374" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">API 서버</text>
+<text x="240" y="404" font-size="16" text-anchor="middle" fill="#334155">Origin 허용 관련 헤더를 응답</text>
+<path d="M240 178 V207" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M232 199 L240 208 L248 199" fill="none" stroke="#0f766e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="261" y="197" font-size="14" fill="#475569">교차 출처 요청</text>
+<path d="M240 305 V334" stroke="#0f766e" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M232 326 L240 335 L248 326" fill="none" stroke="#0f766e" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="261" y="324" font-size="14" fill="#475569">요청·응답 확인</text>
+<rect x="13" y="472" width="454" height="58" rx="10" fill="#f1f5f9"/>
+<text x="240" y="495" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">핵심: 교차 출처 응답 접근 정책</text>
+<text x="240" y="518" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">서버의 인증·인가를 대신하지 않음</text>
 </g>
 </svg>
