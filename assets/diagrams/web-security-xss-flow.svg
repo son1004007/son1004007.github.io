@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="480" height="540" viewBox="0 0 480 540" role="img" aria-labelledby="title desc">
-<title id="title">XSS · 브라우저에서 코드 실행</title>
-<desc id="desc">외부에서 들어온 문자열: 게시글·검색어 등 신뢰할 수 없는 값 → 취약한 화면 출력: 데이터를 HTML·DOM 코드로 해석 → 방문자 브라우저: 원치 않는 스크립트 실행 위험. 방어: 출력 맥락별 인코딩. 안전한 DOM API 사용</desc>
+<title id="title">XSS · 브라우저가 입력값을 코드로 실행</title>
+<desc id="desc">공격자가 제출한 문자열: 공격자가 게시글·검색어에 입력 → 웹페이지의 출력 처리: 웹페이지가 입력값을 코드로 삽입 → 방문자 브라우저: 브라우저가 악성 스크립트를 실행. 애플리케이션: 출력 맥락별 인코딩. 개발자: 안전한 DOM API 사용</desc>
 <rect x="0" y="0" width="480" height="540" rx="16" fill="#ffffff"/>
 <g font-family="Noto Sans CJK KR, NanumGothic, sans-serif">
 <text x="240" y="43" font-size="22" font-weight="700" text-anchor="middle" fill="#b45309">XSS · 브라우저에서 코드 실행</text>
@@ -10,13 +10,13 @@
 <text x="240" y="150" font-size="16" text-anchor="middle" fill="#334155">게시글·검색어 등 신뢰할 수 없는 값</text>
 <rect x="21" y="210" width="438" height="94" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.8"/>
 <text x="240" y="247" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">취약한 화면 출력</text>
-<text x="240" y="277" font-size="16" text-anchor="middle" fill="#334155">데이터를 HTML·DOM 코드로 해석</text>
+<text x="240" y="277" font-size="16" text-anchor="middle" fill="#334155">데이터를 HTML·DOM 코드로 삽입</text>
 <rect x="21" y="337" width="438" height="94" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.8"/>
 <text x="240" y="374" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">방문자 브라우저</text>
 <text x="240" y="404" font-size="16" text-anchor="middle" fill="#334155">원치 않는 스크립트 실행 위험</text>
 <path d="M240 178 V207" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round"/>
 <path d="M232 199 L240 208 L248 199" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="261" y="197" font-size="14" fill="#475569">입력값 전달</text>
+<text x="261" y="197" font-size="14" fill="#475569">화면에 전달</text>
 <path d="M240 305 V334" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round"/>
 <path d="M232 326 L240 335 L248 326" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="261" y="324" font-size="14" fill="#475569">코드로 해석</text>
