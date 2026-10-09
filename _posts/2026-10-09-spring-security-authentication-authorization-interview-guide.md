@@ -7,7 +7,7 @@ categories: [backend]
 tags: [Java, Spring Boot, Spring Security, Authentication, Authorization, RBAC, Interview]
 ---
 
-Spring Security를 사용해 인증·인가를 구현했다고 설명하려면 **누가 로그인했는지 확인(인증)**하고, **그 사용자가 어떤 기능에 접근할 수 있는지 판단(인가)**하는 과정을 코드와 요청 흐름으로 설명할 수 있어야 한다.
+Spring Security는 사용자의 신원을 확인하는 **인증(Authentication)**과 사용자의 접근 권한을 판단하는 **인가(Authorization)**를 처리한다. 개발자는 요청을 처리하는 구성 요소와 각 구성 요소의 역할을 설명할 수 있어야 한다.
 
 이 글은 **암기용 요약 → 구성 요소 → 처리 흐름 → 설정 예시 → 면접 질문 → 검증 항목** 순서로 정리했다. 설명과 예시는 Spring Security 6.5.x의 Servlet 기반 Spring MVC 애플리케이션을 기준으로 한다. 버전에 따라 설정 API와 기본 동작을 확인해야 한다.
 
@@ -48,11 +48,11 @@ HTTP 요청
   → HTTP 응답
 ```
 
-- **인증되지 않은 사용자:** 로그인 요구 또는 401 응답 등 인증 방식에 따른 처리.
-- **인증되었지만 권한 부족:** 일반적으로 403 응답.
-- **인증 성공:** SecurityContext를 현재 요청에서 사용. 세션 방식에서는 인증 컨텍스트가 다음 요청에도 복원되도록 저장해야 한다.
-- **주의:** 모든 요청마다 ID/PW를 다시 검사하는 것은 아니다. 세션 방식에서는 저장된 인증 정보를 복원하고, Bearer/JWT 방식은 유효한 토큰을 요청마다 검사하는 구조가 일반적이다.
-- **FilterChainProxy:** 여러 SecurityFilterChain 중 첫 번째로 일치하는 체인을 적용한다. 필터 순서가 중요하다.
+- **인증이 필요한 요청:** Spring Security는 인증 방식에 따라 로그인 페이지로 이동시키거나 HTTP 401 응답을 반환한다.
+- **권한이 부족한 요청:** Spring Security는 일반적으로 HTTP 403 응답을 반환한다.
+- **인증 성공:** Spring Security는 인증된 사용자의 Authentication을 SecurityContext에 보관한다. 세션 기반 서비스는 다음 요청에서 사용할 인증 컨텍스트를 세션 저장소에 기록한다.
+- **로그인 상태 유지:** 세션 기반 서비스는 저장된 인증 컨텍스트를 다음 요청에서 복원한다. Bearer/JWT 기반 서비스는 요청에 첨부된 토큰을 검사해 사용자를 인증한다.
+- **FilterChainProxy:** FilterChainProxy는 요청 경로에 처음 일치하는 SecurityFilterChain을 선택하고, 체인에 등록된 필터를 순서대로 실행한다.
 
 ## 3. 실제로 구현하는 기능과 책임
 
@@ -60,15 +60,15 @@ HTTP 요청
 | --- | --- | --- |
 | 접근 경로 분리 | `SecurityFilterChain`, `requestMatchers` | 공개·인증 필요·관리자 전용 경로 |
 | ID/PW 로그인 | `AuthenticationManager`, `DaoAuthenticationProvider`, `UserDetailsService` | 계정 존재·비활성·비밀번호 검증 |
-| 비밀번호 관리 | `PasswordEncoder` (예: BCrypt) | 평문 저장 금지, `matches`로 검증 |
+| 비밀번호 관리 | `PasswordEncoder` (예: BCrypt) | 비밀번호 해시 저장, `matches`로 검증 |
 | 인가 | `hasRole`, `hasAuthority`, `@PreAuthorize` | URL뿐 아니라 중요한 Service 동작도 보호 |
 | 세션 관리 | `SecurityContextRepository`, `HttpSession` | 인증 컨텍스트 저장, 세션 고정 공격 방어 |
-| 로그아웃 | logout 처리, 세션 무효화 | 재요청 시 인증이 남지 않는지 |
+| 로그아웃 | logout 처리, 세션 무효화 | 기존 세션의 재사용 차단 |
 | CSRF 방어 | `CsrfFilter`, CSRF token | 세션 쿠키 기반 상태 변경 요청 |
 | 실패 응답 | `AuthenticationEntryPoint`, `AccessDeniedHandler` | API의 401/403, 브라우저 로그인 리다이렉트 |
 | SSO 연동 | 검증된 SSO/OIDC/SAML 연동 구성 | 신원 검증·계정 매핑·서비스 역할 적용 |
 
-**중요:** `UserDetailsService`는 사용자 정보를 조회하는 역할이지 비밀번호 자체를 검증하는 구성 요소가 아니다. DB 비밀번호 인증은 일반적으로 `DaoAuthenticationProvider`가 `PasswordEncoder`를 사용해 검증한다.
+**역할 구분:** `UserDetailsService`는 사용자 정보를 조회한다. `DaoAuthenticationProvider`는 일반적인 ID/PW 인증에서 `PasswordEncoder`를 사용해 비밀번호를 검증한다.
 
 ## 4. SecurityFilterChain 설정 예시
 
@@ -102,10 +102,10 @@ public class SecurityConfig {
 
 - `permitAll()`: 로그인 페이지 등 익명 접근 허용.
 - `authenticated()`: 로그인한 사용자만 접근 허용.
-- `hasRole("ADMIN")`: 기본적으로 `ROLE_ADMIN` 권한 검사. `hasAuthority("ADMIN")`과 단순히 같은 표현이 아니다.
+- `hasRole("ADMIN")`: 기본 설정에서 `ROLE_ADMIN` 권한을 검사한다. `hasAuthority("ADMIN")`은 `ADMIN` 권한 문자열을 그대로 검사한다.
 - `anyRequest().authenticated()`: 앞의 규칙에 없는 경로의 기본 접근 정책.
 - `@PreAuthorize("hasRole('ADMIN')")`: Service 메서드 수준에서도 권한 검사 가능. 메서드 보안 활성화와 프록시 적용 조건에 주의한다.
-- 이 예시는 **인증·인가 설정 일부**이며, 실제 DB 조회 코드나 계정 모델 전체를 구현한 완성 예제는 아니다.
+- **예시의 범위:** 이 설정은 HTTP 경로별 접근 정책과 폼 로그인·로그아웃을 보여준다. 실제 서비스는 사용자 조회용 UserDetailsService와 계정 저장소를 함께 구성한다.
 
 ## 5. 면접 핵심 질문 15개와 짧은 답변
 
@@ -115,50 +115,50 @@ public class SecurityConfig {
 인증은 사용자 신원 확인이고, 인가는 인증된 주체가 리소스나 기능에 접근할 권한이 있는지 판단하는 과정이다.
 
 **Q2. Spring Security는 언제 동작하나요?**  
-Controller 전에 Servlet Filter 체인에서 요청을 처리한다. `FilterChainProxy`가 적절한 `SecurityFilterChain`을 선택하고 보안 필터가 실행된다.
+Spring Security는 Controller 호출 전에 Servlet Filter 체인에서 HTTP 요청을 처리합니다. `FilterChainProxy`는 일치하는 `SecurityFilterChain`을 선택하고 필터를 순서대로 실행합니다.
 
 **Q3. 로그인 인증 흐름을 설명해 보세요.**  
-폼 로그인의 예에서는 인증 필터가 자격 증명을 받아 `AuthenticationManager`에 전달하고, `AuthenticationProvider`가 사용자 정보·비밀번호를 검증한다. 성공 시 인증된 `Authentication`을 `SecurityContext`에 저장한다.
+폼 로그인에서 인증 필터는 ID/PW를 `AuthenticationManager`에 전달합니다. `AuthenticationProvider`는 사용자와 비밀번호를 검증합니다. Spring Security는 인증된 `Authentication`을 `SecurityContext`에 보관합니다.
 
 **Q4. UserDetailsService와 PasswordEncoder의 역할은?**  
-전자는 사용자 정보를 조회하고, 후자는 비밀번호를 안전하게 해시하고 입력 비밀번호가 저장된 해시와 일치하는지 검증한다.
+`UserDetailsService`는 사용자 정보를 조회합니다. `PasswordEncoder`는 비밀번호 해시를 생성하고 입력 비밀번호와 저장된 해시의 일치 여부를 확인합니다.
 
 **Q5. SecurityContext는 무엇인가요?**  
-현재 처리 중인 요청의 인증 정보를 담는 컨텍스트다. `SecurityContextHolder`로 접근하며, 여러 요청에 걸쳐 유지하려면 저장소(예: 세션)를 사용한다.
+`SecurityContext`는 현재 요청의 인증 정보를 보관합니다. 애플리케이션은 `SecurityContextHolder`로 인증 정보를 조회합니다. 세션 기반 서비스는 인증 컨텍스트를 세션에 저장해 다음 요청에서도 사용합니다.
 
 ### 권한과 세션
 
 **Q6. 권한별 접근 제어는 어떻게 하나요?**  
-`requestMatchers`와 `hasRole`/`hasAuthority`로 URL 접근을 제어한다. 중요한 비즈니스 작업은 `@PreAuthorize`나 Service 검증 등으로 추가로 보호한다.
+Spring Security는 `requestMatchers`와 `hasRole`/`hasAuthority`로 URL 접근을 제어합니다. Service 계층은 `@PreAuthorize`와 업무 규칙 검증으로 중요한 기능의 권한을 확인합니다.
 
 **Q7. hasRole과 hasAuthority의 차이는?**  
 기본 설정에서 `hasRole("ADMIN")`은 `ROLE_ADMIN`을 검사한다. `hasAuthority("ADMIN")`은 `ADMIN`이라는 권한 문자열 자체를 검사한다.
 
 **Q8. 401과 403은 어떻게 다르나요?**  
-API에서 401은 인증이 없거나 유효하지 않은 경우, 403은 인증은 되었지만 권한이 부족한 경우가 대표적이다. 폼 로그인은 401 대신 로그인 페이지로 리다이렉트할 수도 있고, CSRF 실패도 403이 될 수 있다.
+API는 인증이 필요한 경우 주로 HTTP 401을 반환하고, 인증된 사용자의 권한이 부족한 경우 주로 HTTP 403을 반환합니다. 폼 로그인 설정은 로그인 페이지로 이동시키기도 하며, CSRF 토큰 검증 실패에도 403 응답을 사용할 수 있습니다.
 
 **Q9. 세션 방식과 JWT 방식의 차이는?**  
-세션 방식은 서버 측 세션을 통해 인증 상태를 유지한다. JWT는 서명 등 검증을 통해 토큰에 포함된 주체·권한 주장을 확인한다. JWT 자체로 로그아웃·폐기·권한 변경 문제가 해결되는 것은 아니다.
+세션 기반 서비스는 서버 세션에 인증 상태를 보관합니다. JWT 기반 서비스는 토큰의 서명과 유효성, 주체·권한 정보를 검사합니다. JWT 기반 서비스는 로그아웃, 토큰 폐기와 권한 갱신 정책도 함께 설계합니다.
 
 **Q10. 세션 고정 공격은 어떻게 막나요?**  
-로그인 전후 동일한 세션 ID를 악용하지 못하도록 인증 성공 시 세션 ID를 변경하는 방식을 사용한다. HTTPS와 쿠키의 Secure, HttpOnly, SameSite 설정도 함께 검토한다.
+Spring Security는 인증 성공 시 세션 ID를 변경해 세션 고정 공격을 방어합니다. 서버는 HTTPS를 적용하고, 브라우저는 Secure·HttpOnly·SameSite 쿠키 설정에 따라 세션 쿠키를 보호합니다.
 
 ### 웹 보안과 SSO
 
 **Q11. CSRF란 무엇이며 언제 방어해야 하나요?**  
-브라우저가 자동으로 보내는 인증 정보(예: 세션 쿠키)를 공격자가 악용해 원치 않는 요청을 발생시키는 공격이다. 세션 쿠키 기반 상태 변경 요청에는 CSRF token 등 방어가 필요하다. **REST API나 JWT 사용 여부만으로 무조건 CSRF를 꺼도 된다고 단정하지 않는다.**
+CSRF 공격자는 사용자의 브라우저가 인증 쿠키와 함께 위조 요청을 전송하도록 유도합니다. 서버는 CSRF 토큰으로 상태 변경 요청을 검증합니다. 쿠키로 JWT를 자동 전송하는 서비스도 CSRF 방어를 적용합니다.
 
 **Q12. CORS와 CSRF는 어떻게 다르나요?**  
-CORS는 브라우저의 교차 출처 응답 접근을 통제하는 정책이고, CSRF는 사용자의 인증 상태를 악용해 요청을 실행시키는 공격이다. CORS가 CSRF 방어를 대신하지 않는다.
+CORS는 브라우저가 교차 출처 API 응답에 대한 JavaScript 접근을 제어하는 정책입니다. CSRF는 공격자가 사용자의 로그인 상태를 이용해 서버에 위조 요청을 보내는 공격입니다. 서버는 각 목적에 맞게 CORS 설정과 CSRF 보호 기능을 구성합니다.
 
 **Q13. Filter와 Interceptor는 무엇이 다른가요?**  
-Servlet Filter는 DispatcherServlet 이전을 포함한 Servlet 처리 경계에서 동작하며, Spring MVC Interceptor는 Handler 호출 전후에 동작한다. Spring Security의 웹 보안은 필터 기반이다.
+Servlet Filter는 DispatcherServlet을 포함한 Servlet 처리 과정에서 동작합니다. Spring MVC Interceptor는 Handler 실행 전후에 동작합니다. Spring Security는 Servlet Filter를 통해 웹 보안을 적용합니다.
 
 **Q14. SSO 인증을 내부 권한과 연결하려면?**  
-외부 신원 검증이 성공하면 내부 사용자 계정에 안전하게 매핑하고, 내부 계정 상태와 역할을 기준으로 인가한다. 외부 토큰의 역할 값을 그대로 관리자 권한으로 신뢰하지 않는다.
+SSO 연동 모듈은 외부에서 검증된 사용자 신원을 서비스 내부 계정에 연결합니다. 서비스는 내부 계정 상태와 역할을 기준으로 접근 권한을 판단합니다.
 
 **Q15. 보안 설정을 어떻게 테스트하나요?**  
-익명·일반·관리자 계정으로 정상 접근과 거부를 확인한다. 잘못된 비밀번호, 비활성 사용자, CSRF 누락, 로그아웃 이후 접근, 세션 고정, 잘못된 SSO 서명·대상·재사용 등을 실패 시나리오로 검증한다.
+테스트는 익명·일반·관리자 계정으로 접근 허용과 차단 결과를 확인합니다. 테스트는 비밀번호 오류, 비활성 계정, CSRF 토큰 누락, 로그아웃 후 세션 재사용, SSO 서명·대상 오류와 재사용 요청에 대한 차단 결과도 검증합니다.
 
 ## 6. DB 로그인 + SSO 경험을 설명할 때
 
@@ -166,9 +166,9 @@ Servlet Filter는 DispatcherServlet 이전을 포함한 Servlet 처리 경계에
 
 > Spring Security 기반으로 DB 로그인과 역할별 접근 제어를 구성하고, SSO 연동 시 외부에서 확인된 사용자 신원을 내부 계정과 연결해 서비스 권한으로 처리하는 방식을 다뤘습니다. 로그인 상태는 세션으로 유지하며 인증 실패와 접근 권한 부족을 구분했습니다. 구체적인 책임과 검증 범위는 당시 구현한 부분을 기준으로 설명드리겠습니다.
 
-이 문장은 **설명 구조를 연습하기 위한 예시**다. 실제 면접에서는 직접 구현한 항목만 말하고, 타인이 구현한 영역이나 독립 재현 샘플의 검증 결과를 실제 고객 시스템 전체의 성과로 주장하지 않는다.
+**면접 적용 기준:** 지원자는 자신이 직접 구현하거나 검증한 인증·인가 기능과 책임 범위를 구체적인 코드 흐름으로 설명한다. 공개 독립 재현 샘플의 테스트 결과는 해당 샘플의 검증 근거로 구분한다.
 
-관련 독립 재현 사례: [Spring Security 인증 브리지](https://son1004007.github.io/engineering-career-portfolio/cases/spring-security-auth-bridge/). 이 샘플은 합성 계정과 SSO assertion을 사용하며, 실제 외부 IdP 운영 검증은 포함하지 않는다.
+관련 독립 재현 사례: [Spring Security 인증 브리지](https://son1004007.github.io/engineering-career-portfolio/cases/spring-security-auth-bridge/). 이 샘플은 합성 계정과 서명된 SSO assertion을 사용해 인증·인가 흐름을 테스트한 독립 재현 사례다.
 
 ## 7. 실무 검증 체크리스트
 
