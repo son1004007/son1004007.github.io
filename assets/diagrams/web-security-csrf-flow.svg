@@ -3,7 +3,7 @@
 <title id="title">CSRF · 로그인 이용한 요청 위조</title>
 <desc id="desc">공격자 사이트: 위조된 요청이 발생하도록 유도 → 사용자 브라우저: 조건에 따라 로그인 쿠키를 전송 → 정상 서비스: CSRF 토큰 등 요청 검증이 중요. 방어: CSRF 토큰 · Origin 검사. SameSite는 보조 방어</desc>
 <rect x="0" y="0" width="480" height="540" rx="16" fill="#ffffff"/>
-<g font-family="Arial, Noto Sans KR, sans-serif">
+<g font-family="Noto Sans CJK KR, NanumGothic, sans-serif">
 <text x="240" y="43" font-size="22" font-weight="700" text-anchor="middle" fill="#2563eb">CSRF · 로그인 이용한 요청 위조</text>
 <rect x="21" y="83" width="438" height="94" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
 <text x="240" y="120" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">공격자 사이트</text>
