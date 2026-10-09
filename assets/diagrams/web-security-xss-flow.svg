@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="760" height="464" viewBox="0 0 760 464" role="img" aria-labelledby="title desc">
-<title id="title">XSS - 입력값이 브라우저에서 코드로 실행</title>
-<desc id="desc">외부에서 들어온 문자열: 게시글·검색어 등 신뢰할 수 없는 값 → 취약한 화면 출력: 입력 문자열을 HTML·DOM 코드로 해석 → 방문자 브라우저: 원치 않는 스크립트가 실행될 수 있음. 핵심 방어: 출력 맥락별 인코딩 + 안전한 DOM API</desc>
-<rect width="760" height="464" fill="#ffffff" rx="16"/>
-<text x="380" y="43" font-family="Arial, Noto Sans KR, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#b45309">XSS - 입력값이 브라우저에서 코드로 실행</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="540" viewBox="0 0 480 540" role="img" aria-labelledby="title desc">
+<title id="title">XSS · 브라우저에서 코드 실행</title>
+<desc id="desc">외부에서 들어온 문자열: 게시글·검색어 등 신뢰할 수 없는 값 → 취약한 화면 출력: 데이터를 HTML·DOM 코드로 해석 → 방문자 브라우저: 원치 않는 스크립트 실행 위험. 방어: 출력 맥락별 인코딩. 안전한 DOM API 사용</desc>
+<rect x="0" y="0" width="480" height="540" rx="16" fill="#ffffff"/>
 <g font-family="Arial, Noto Sans KR, sans-serif">
-<rect x="44" y="81" width="672" height="81" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="2"/>
-  <text x="380" y="113" font-size="24" font-weight="700" text-anchor="middle" fill="#0f172a">외부에서 들어온 문자열</text>
-  <text x="380" y="139" font-size="17" text-anchor="middle" fill="#334155">게시글·검색어 등 신뢰할 수 없는 값</text>
-<rect x="44" y="193" width="672" height="81" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="2"/>
-  <text x="380" y="225" font-size="24" font-weight="700" text-anchor="middle" fill="#0f172a">취약한 화면 출력</text>
-  <text x="380" y="251" font-size="17" text-anchor="middle" fill="#334155">입력 문자열을 HTML·DOM 코드로 해석</text>
-<rect x="44" y="305" width="672" height="81" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="2"/>
-  <text x="380" y="337" font-size="24" font-weight="700" text-anchor="middle" fill="#0f172a">방문자 브라우저</text>
-  <text x="380" y="363" font-size="17" text-anchor="middle" fill="#334155">원치 않는 스크립트가 실행될 수 있음</text>
-<path d="M380 164 V188" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M372 181 L380 190 L388 181" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="401" y="182" font-size="15" fill="#475569">입력값 전달</text>
-<path d="M380 276 V300" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <path d="M372 293 L380 302 L388 293" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="401" y="294" font-size="15" fill="#475569">코드로 해석</text>
-<rect x="28" y="420" width="704" height="32" rx="9" fill="#f1f5f9"/>
-<text x="380" y="442" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">핵심 방어: 출력 맥락별 인코딩 + 안전한 DOM API</text>
+<text x="240" y="43" font-size="22" font-weight="700" text-anchor="middle" fill="#b45309">XSS · 브라우저에서 코드 실행</text>
+<rect x="21" y="83" width="438" height="94" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.8"/>
+<text x="240" y="120" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">외부에서 들어온 문자열</text>
+<text x="240" y="150" font-size="16" text-anchor="middle" fill="#334155">게시글·검색어 등 신뢰할 수 없는 값</text>
+<rect x="21" y="210" width="438" height="94" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.8"/>
+<text x="240" y="247" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">취약한 화면 출력</text>
+<text x="240" y="277" font-size="16" text-anchor="middle" fill="#334155">데이터를 HTML·DOM 코드로 해석</text>
+<rect x="21" y="337" width="438" height="94" rx="14" fill="#fffbeb" stroke="#b45309" stroke-width="1.8"/>
+<text x="240" y="374" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">방문자 브라우저</text>
+<text x="240" y="404" font-size="16" text-anchor="middle" fill="#334155">원치 않는 스크립트 실행 위험</text>
+<path d="M240 178 V207" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M232 199 L240 208 L248 199" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="261" y="197" font-size="14" fill="#475569">입력값 전달</text>
+<path d="M240 305 V334" stroke="#b45309" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M232 326 L240 335 L248 326" fill="none" stroke="#b45309" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="261" y="324" font-size="14" fill="#475569">코드로 해석</text>
+<rect x="13" y="472" width="454" height="58" rx="10" fill="#f1f5f9"/>
+<text x="240" y="495" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">방어: 출력 맥락별 인코딩</text>
+<text x="240" y="518" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">안전한 DOM API 사용</text>
 </g>
 </svg>
