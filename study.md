@@ -43,6 +43,7 @@ title: Study
 - Java
 - Spring Boot
 - REST API
+- [FastAPI API 개발 면접 질문과 핵심 답변 37개]({{ '/backend/fastapi-api-interview-questions/' | relative_url }})
 - 데이터베이스 설계
 - 인증/권한
 - 운영 환경 구성
