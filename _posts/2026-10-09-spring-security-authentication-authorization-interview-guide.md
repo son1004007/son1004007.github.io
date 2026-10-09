@@ -61,7 +61,7 @@ HTTP 요청
 | 접근 경로 분리 | `SecurityFilterChain`, `requestMatchers` | 공개·인증 필요·관리자 전용 경로 |
 | ID/PW 로그인 | `AuthenticationManager`, `DaoAuthenticationProvider`, `UserDetailsService` | 계정 존재·비활성·비밀번호 검증 |
 | 비밀번호 관리 | `PasswordEncoder` (예: BCrypt) | 비밀번호 해시 저장, `matches`로 검증 |
-| 인가 | `hasRole`, `hasAuthority`, `@PreAuthorize` | URL뿐 아니라 중요한 Service 동작도 보호 |
+| 인가 | `hasRole`, `hasAuthority`, `@PreAuthorize` | Spring Security가 URL과 Service 메서드의 권한을 검사 |
 | 세션 관리 | `SecurityContextRepository`, `HttpSession` | 인증 컨텍스트 저장, 세션 고정 공격 방어 |
 | 로그아웃 | logout 처리, 세션 무효화 | 기존 세션의 재사용 차단 |
 | CSRF 방어 | `CsrfFilter`, CSRF token | 세션 쿠키 기반 상태 변경 요청 |
@@ -103,7 +103,7 @@ public class SecurityConfig {
 - `permitAll()`: 로그인 페이지 등 익명 접근 허용.
 - `authenticated()`: 로그인한 사용자만 접근 허용.
 - `hasRole("ADMIN")`: 기본 설정에서 `ROLE_ADMIN` 권한을 검사한다. `hasAuthority("ADMIN")`은 `ADMIN` 권한 문자열을 그대로 검사한다.
-- `anyRequest().authenticated()`: 앞의 규칙에 없는 경로의 기본 접근 정책.
+- `anyRequest().authenticated()`: Spring Security가 나머지 모든 경로에 사용자 인증을 요구한다.
 - `@PreAuthorize("hasRole('ADMIN')")`: Service 메서드 수준에서도 권한 검사 가능. 메서드 보안 활성화와 프록시 적용 조건에 주의한다.
 - **예시의 범위:** 이 설정은 HTTP 경로별 접근 정책과 폼 로그인·로그아웃을 보여준다. 실제 서비스는 사용자 조회용 UserDetailsService와 계정 저장소를 함께 구성한다.
 
@@ -172,16 +172,16 @@ SSO 연동 모듈은 외부에서 검증된 사용자 신원을 서비스 내부
 
 ## 7. 실무 검증 체크리스트
 
-- [ ] 비로그인 사용자의 보호 API 접근 차단 (API 응답 / 화면 리다이렉트 구분)
-- [ ] USER 계정의 관리자 API 접근 차단, ADMIN 계정은 허용
-- [ ] DB 비밀번호가 해시로 저장되고 입력값과 검증되는지
-- [ ] 비활성·삭제된 내부 계정의 접근 차단
-- [ ] 로그인 이후 SecurityContext와 세션이 유지되는지
-- [ ] 로그아웃 후 기존 세션으로 재접근할 수 없는지
-- [ ] CSRF token 없이 세션 기반 상태 변경 요청을 실행할 수 없는지
-- [ ] 인증 성공 시 세션 고정 방어가 적용되는지
-- [ ] SSO issuer, audience, 서명, 시간, 재사용, 계정 매핑이 적절히 검증되는지
-- [ ] 인증 실패와 권한 부족을 코드 및 테스트에서 구분하는지
+- [ ] 테스트는 익명 사용자의 보호 API 접근 차단과 화면 로그인 리다이렉트를 구분해 확인한다.
+- [ ] 테스트는 USER 역할의 관리자 API 접근 차단과 ADMIN 역할의 접근 허용을 확인한다.
+- [ ] 테스트는 DB 비밀번호 해시 저장과 PasswordEncoder 검증 결과를 확인한다.
+- [ ] 테스트는 비활성·삭제 계정의 접근 차단을 확인한다.
+- [ ] 테스트는 로그인 이후 SecurityContext와 세션 유지 결과를 확인한다.
+- [ ] 테스트는 로그아웃 처리 후 이전 세션의 접근 차단을 확인한다.
+- [ ] 테스트는 CSRF 토큰이 누락된 상태 변경 요청의 차단을 확인한다.
+- [ ] 테스트는 인증 성공 시 세션 ID 변경과 세션 고정 방어를 확인한다.
+- [ ] 테스트는 SSO issuer·audience·서명·시간·재사용 검사 및 내부 계정 매핑을 확인한다.
+- [ ] 테스트는 인증 실패와 접근 권한 부족에 대한 응답을 구분해 확인한다.
 
 ## 8. 암기용 최종 정리
 
