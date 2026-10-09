@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="480" height="540" viewBox="0 0 480 540" role="img" aria-labelledby="title desc">
-<title id="title">CSRF · 브라우저가 인증된 요청 전송</title>
-<desc id="desc">공격자 사이트: 공격자가 위조 요청을 유도 → 사용자 브라우저: 브라우저가 쿠키 정책에 따라 쿠키 전송 → 정상 서비스: 서비스가 CSRF 토큰을 검증. 서비스: CSRF 토큰 · Origin 검사. 브라우저: SameSite로 쿠키 전송 제어</desc>
-<rect x="0" y="0" width="480" height="540" rx="16" fill="#ffffff"/>
+<title id="title">CSRF · 브라우저가 위조 요청 전송</title>
+<desc id="desc">공격자 사이트: 공격자가 조작된 요청을 유도 → 사용자 브라우저: 브라우저가 정책에 따라 쿠키 전송 → 정상 서비스: 서버가 CSRF 토큰을 검증. 서버: CSRF 토큰 · Origin 검사. 브라우저: SameSite 쿠키 정책</desc>
+<rect width="480" height="540" rx="16" fill="#ffffff"/>
 <g font-family="Noto Sans CJK KR, NanumGothic, sans-serif">
-<text x="240" y="43" font-size="22" font-weight="700" text-anchor="middle" fill="#2563eb">CSRF · 로그인 이용한 요청 위조</text>
-<rect x="21" y="83" width="438" height="94" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="240" y="120" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">공격자 사이트</text>
-<text x="240" y="150" font-size="16" text-anchor="middle" fill="#334155">위조된 요청이 발생하도록 유도</text>
-<rect x="21" y="210" width="438" height="94" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="240" y="247" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">사용자 브라우저</text>
-<text x="240" y="277" font-size="16" text-anchor="middle" fill="#334155">조건에 따라 로그인 쿠키를 전송</text>
-<rect x="21" y="337" width="438" height="94" rx="14" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
-<text x="240" y="374" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">정상 서비스</text>
-<text x="240" y="404" font-size="16" text-anchor="middle" fill="#334155">CSRF 토큰 등 요청 검증이 중요</text>
-<path d="M240 178 V207" stroke="#2563eb" stroke-width="3" fill="none" stroke-linecap="round"/>
-<path d="M232 199 L240 208 L248 199" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="261" y="197" font-size="14" fill="#475569">공격자 유도</text>
-<path d="M240 305 V334" stroke="#2563eb" stroke-width="3" fill="none" stroke-linecap="round"/>
-<path d="M232 326 L240 335 L248 326" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-<text x="261" y="324" font-size="14" fill="#475569">브라우저 요청</text>
-<rect x="13" y="472" width="454" height="58" rx="10" fill="#f1f5f9"/>
-<text x="240" y="495" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">방어: CSRF 토큰 · Origin 검사</text>
-<text x="240" y="518" font-size="16" font-weight="600" text-anchor="middle" fill="#334155">SameSite는 보조 방어</text>
+<text x="240" y="43" font-size="21" font-weight="700" text-anchor="middle" fill="#1d4ed8">CSRF · 브라우저가 위조 요청 전송</text>
+<rect x="19" y="81" width="442" height="96" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+<text x="240" y="119" font-size="22" font-weight="700" text-anchor="middle" fill="#0f172a">공격자 사이트</text>
+<text x="240" y="149" font-size="16" text-anchor="middle" fill="#334155">공격자가 조작된 요청을 유도</text>
+<rect x="19" y="208" width="442" height="96" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+<text x="240" y="246" font-size="22" font-weight="700" text-anchor="middle" fill="#0f172a">사용자 브라우저</text>
+<text x="240" y="276" font-size="16" text-anchor="middle" fill="#334155">브라우저가 정책에 따라 쿠키 전송</text>
+<rect x="19" y="335" width="442" height="96" rx="14" fill="#eff6ff" stroke="#1d4ed8" stroke-width="2"/>
+<text x="240" y="373" font-size="22" font-weight="700" text-anchor="middle" fill="#0f172a">정상 서비스</text>
+<text x="240" y="403" font-size="16" text-anchor="middle" fill="#334155">서버가 CSRF 토큰을 검증</text>
+<path d="M240 178 V207" stroke="#1d4ed8" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M232 199 L240 208 L248 199" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="261" y="196" font-size="14" fill="#475569">공격자가 사용자 유도</text>
+<path d="M240 305 V334" stroke="#1d4ed8" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="M232 326 L240 335 L248 326" fill="none" stroke="#1d4ed8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="261" y="323" font-size="14" fill="#475569">브라우저가 요청 전송</text>
+<rect x="12" y="471" width="456" height="60" rx="10" fill="#f1f5f9"/>
+<text x="240" y="495" font-size="15" font-weight="600" text-anchor="middle" fill="#334155">서버: CSRF 토큰 · Origin 검사</text>
+<text x="240" y="519" font-size="15" font-weight="600" text-anchor="middle" fill="#334155">브라우저: SameSite 쿠키 정책</text>
 </g>
 </svg>
