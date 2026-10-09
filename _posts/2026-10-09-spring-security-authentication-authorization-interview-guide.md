@@ -199,6 +199,8 @@ Servlet Filter는 DispatcherServlet 이전을 포함한 Servlet 처리 경계에
 실패 = 401/로그인 유도 vs 403/접근 거부
 ```
 
+관련 학습: [CSRF·XSS·CORS·SSRF 차이와 면접 암기 노트]({{ '/web-security-csrf-xss-cors-ssrf/' | relative_url }})
+
 ## 참고 문서
 
 - [Spring Security 6.5 - Architecture](https://docs.spring.io/spring-security/reference/6.5/servlet/architecture.html)
