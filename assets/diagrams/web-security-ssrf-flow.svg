@@ -3,7 +3,7 @@
 <title id="title">SSRF · 서버를 통한 원치 않는 요청</title>
 <desc id="desc">공격자가 입력한 URL: 다운로드·Webhook 설정에 입력 → 백엔드 서버: 검증이 부족하면 해당 URL로 요청 → 내부·제한된 서비스: 서버의 접근 권한이 악용될 위험. 방어: 목적지 허용목록 · IP/DNS 검증. 리다이렉트·송신 트래픽 통제</desc>
 <rect x="0" y="0" width="480" height="540" rx="16" fill="#ffffff"/>
-<g font-family="Arial, Noto Sans KR, sans-serif">
+<g font-family="Noto Sans CJK KR, NanumGothic, sans-serif">
 <text x="240" y="43" font-size="22" font-weight="700" text-anchor="middle" fill="#7c3aed">SSRF · 서버를 통한 원치 않는 요청</text>
 <rect x="21" y="83" width="438" height="94" rx="14" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.8"/>
 <text x="240" y="120" font-size="23" font-weight="700" text-anchor="middle" fill="#0f172a">공격자가 입력한 URL</text>
