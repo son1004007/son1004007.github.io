@@ -9,7 +9,13 @@ tags: [AI, LLM, Agent, MCP, LangChain, LangGraph, vLLM, Harness, Study]
 
 이 문서는 AI 서비스 개발에 필요한 용어를 **주어 + 동작 + 목적**이 분명한 문장으로 정리한다.
 
-## 1. 핵심 용어 한 줄 정의
+**면접 우선 암기(9개 용어):** LLM, Prompt, Context, Agent, Tool Calling, MCP, RAG, LangChain, LangGraph.
+
+**함께 이해할 기능(별도 글):** Structured Output, Embedding/Vector Search, Evaluation, Prompt Injection. 이 개념은 실제 AI 서비스의 품질·보안을 설명할 때 사용한다.
+
+**참고 사전:** Token/Context Window는 기본 이해, Skill·vLLM·Harness 및 Harness Engineering은 해당 기술을 활용하는 업무·질문이 있을 때 깊게 학습한다. 표의 모든 문장을 동일한 수준으로 외울 필요는 없다.
+
+## 1. 핵심 용어 한 줄 정의 (사전; 전체 암기 대상 아님)
 
 | 용어 | 암기할 정의 |
 |---|---|
@@ -54,16 +60,16 @@ tags: [AI, LLM, Agent, MCP, LangChain, LangGraph, vLLM, Harness, Study]
 | Agent 실행 및 보안 통제 | Harness는 모델 호출, 도구 실행, 권한과 작업 상태를 관리한다. |
 | 자체 LLM 서버 구축 | vLLM은 GPU 등의 연산 환경에서 모델 추론을 수행한다. |
 
-## 4. 암기 점검
+## 4. 암기 점검 - 우선 6문항
 
-1. **LLM에 질문과 지시를 전달하는 입력은?** → Prompt
-2. **LLM에 응답 생성의 참고 정보를 제공하는 것은?** → Context
-3. **AI 애플리케이션과 외부 도구 사이의 연결을 표준화하는 것은?** → MCP
-4. **Agent에 재사용할 작업 절차를 제공하는 것은?** → Skill
-5. **LLM이 외부 기능의 실행을 요청하는 방식은?** → Tool Calling
-6. **Agent의 실행 흐름과 상태를 관리하는 것은?** → LangGraph
-7. **자체 LLM의 추론과 API 서빙을 담당하는 것은?** → vLLM
-8. **Agent의 실행 루프와 권한을 관리하는 환경은?** → Agent Harness
+1. **LLM의 Prompt와 Context의 차이는?** → Prompt는 지시·질문·예시이고, Context는 응답 생성에 참고하는 전체 정보다.
+2. **Agent와 Workflow의 차이는?** → Agent는 모델이 다음 행동을 동적으로 선택하고, Workflow는 개발자가 실행 순서·조건을 정의한다.
+3. **Tool Calling을 실제 실행하는 주체는?** → 애플리케이션 서버가 입력·권한을 검증한 뒤 도구를 실행한다.
+4. **MCP는 왜 사용하는가?** → AI 애플리케이션과 외부 도구·데이터의 상호작용을 표준화하기 위해 사용한다.
+5. **RAG는 어떤 흐름인가?** → 관련 자료 검색 → Context 제공 → 근거를 활용한 응답 생성.
+6. **LangChain과 LangGraph의 차이는?** → LangChain은 모델과 도구 등 구성 요소를 연결하고, LangGraph는 State·Node·Edge를 중심으로 실행 흐름과 상태를 제어한다.
+
+실제 AI 서비스의 면접에서는 이 정의에 **사용한 프로젝트 1개와 검증 방법 1개**를 연결해 설명한다.
 
 ## 5. 다음 단계 학습
 
